@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { ProductCard } from "../../components";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -19,19 +20,9 @@ const ProductPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Products</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {products.map((product) => (
-            <li key={product.id}>
-              {product.name} - ${product.price}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="w-[90%] mx-auto">
+      <h1 className="Our Products text-[4vh] font-medium text-center my-[5vh]">Products</h1>
+      <ProductCard/>
     </div>
   );
 };

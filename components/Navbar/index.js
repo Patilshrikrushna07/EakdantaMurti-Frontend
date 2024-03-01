@@ -7,7 +7,7 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 const Navbar = () => {
   return (
-    <div className="bg-white shadow-md">
+    <div className="bg-white shadow-md static">
       <div className="p-[2vh] w-[90%] mx-auto flex flex-row justify-between items-center">
         <img src="/logo.jpg.png" className="w-[13vh]" alt="" />
         <div className="list-none flex flex-row gap-x-[4vh]">
