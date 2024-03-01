@@ -1,4 +1,5 @@
 import "./globals.css";
+import "../utils/fontawesome";
 import { Navbar, Footer } from "../components";
 
 export const metadata = {
