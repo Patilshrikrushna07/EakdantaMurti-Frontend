@@ -21,11 +21,11 @@ const ProductCard = () => {
         <p className="text-[2.5vh] font-semibold">Rs.2500</p>
         <p className="line-through text-red-500 text-[2vh]">Rs.3500</p>
       </div>
-      <div className="onhover flex flex-col items-center p-[1vh]">
+      {/* <div className="onhover flex flex-col items-center p-[1vh]">
         <button className="bg-white text-[#B88E2F] w-full py-[1vh] text-[2.6vh] font-semibold">
           Add to Cart
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
