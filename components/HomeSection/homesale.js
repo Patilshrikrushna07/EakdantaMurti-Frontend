@@ -1,6 +1,6 @@
 import React from 'react'
 
-const homesale = () => {
+const Homesale = () => {
   return (
     <div>
         <h1>Browse The Range</h1>
@@ -9,4 +9,4 @@ const homesale = () => {
   )
 }
 
-export default homesale
+export default Homesale;

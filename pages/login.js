@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from '../../components/AuthComponents/Login';
-import AuthBg from '../../components/AuthComponents/AuthBg';
+import Login from '../components/AuthComponents/Login';
+import AuthBg from '../components/AuthComponents/AuthBg';
 
 const LoginPage = () => {
   return (
@@ -13,4 +13,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default LoginPage;

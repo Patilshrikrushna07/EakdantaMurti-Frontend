@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className="bg-white shadow-md static">
+    <div className="bg-white shadow-md mb-[1vh] static">
       <div className="p-[2vh] w-[90%] mx-auto flex flex-row justify-between items-center">
         <Link href="/"><img src="/logo.jpg.png" className="w-[13vh]" alt="" /></Link>
         
