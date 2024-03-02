@@ -4,17 +4,19 @@ import Person2Icon from "@mui/icons-material/Person2";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <div className="bg-white shadow-md static">
       <div className="p-[2vh] w-[90%] mx-auto flex flex-row justify-between items-center">
-        <img src="/logo.jpg.png" className="w-[13vh]" alt="" />
+        <Link href="/"><img src="/logo.jpg.png" className="w-[13vh]" alt="" /></Link>
+        
         <div className="list-none flex flex-row gap-x-[4vh]">
-          <li className="text-[2.5vh] font-semibold">Home</li>
-          <li className="text-[2.5vh] font-semibold">About</li>
-          <li className="text-[2.5vh] font-semibold">Shop</li>
-          <li className="text-[2.5vh] font-semibold">Contact Us</li>
+          <Link href="/"><li className="text-[2.5vh] font-semibold">Home</li></Link>
+          <Link href="/about"><li className="text-[2.5vh] font-semibold">About</li></Link>
+          <Link href="/shop"><li className="text-[2.5vh] font-semibold">Shop</li></Link>
+          <Link href="/contact"><li className="text-[2.5vh] font-semibold">Contact</li></Link>
         </div>
         <div className="list-none flex flex-row gap-x-[4vh]">
           <Person2Icon className="cursor-pointer text-orange-800 text-[4.5vh]" />
