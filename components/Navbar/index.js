@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <div className="bg-white shadow-md mb-[1vh] static">
       <div className="p-[2vh] w-[90%] mx-auto flex flex-row justify-between items-center">
-        <Link href="/"><img src="/logo.jpg.png" className="w-[13vh]" alt="" /></Link>
+        <Link href="/"><img src="/favicon.ico" className="w-[13vh]" alt="" /></Link>
         
         <div className="list-none flex flex-row gap-x-[4vh]">
           <Link href="/"><li className="text-[2.5vh] font-semibold ">Home</li></Link>
