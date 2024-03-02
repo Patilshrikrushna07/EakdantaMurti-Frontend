@@ -9,7 +9,7 @@ const Footer = () => {
       <div className='flex flex-col md:flex-row justify-between'>
         <div className='flex flex-col space-y-4 text-[#9F9F9F]'>
           <Link href="/">
-            <img src="/logo.jpg.png" className="w-[13vh]" alt="Logo" />
+            <img src="/favicon.ico" className="w-[13vh]" alt="Logo" />
           </Link>
           <p>Address: 400 Lorem Ipsum</p>
         </div>
