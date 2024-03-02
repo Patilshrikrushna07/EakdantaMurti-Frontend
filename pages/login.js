@@ -6,7 +6,7 @@ const LoginPage = () => {
   return (
     <div className='flex flex-row items-center overflow-y-hidden'>
         <div className='w-[50%]'>
-            <Login/>
+          <Login/>
         </div>
         <AuthBg/>
     </div>
