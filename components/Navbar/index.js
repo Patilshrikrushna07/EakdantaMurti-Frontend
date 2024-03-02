@@ -13,7 +13,7 @@ const Navbar = () => {
         <Link href="/"><img src="/logo.jpg.png" className="w-[13vh]" alt="" /></Link>
         
         <div className="list-none flex flex-row gap-x-[4vh]">
-          <Link href="/"><li className="text-[2.5vh] font-semibold">Home</li></Link>
+          <Link href="/"><li className="text-[2.5vh] font-semibold ">Home</li></Link>
           <Link href="/about"><li className="text-[2.5vh] font-semibold">About</li></Link>
           <Link href="/shop"><li className="text-[2.5vh] font-semibold">Shop</li></Link>
           <Link href="/contact"><li className="text-[2.5vh] font-semibold">Contact</li></Link>
