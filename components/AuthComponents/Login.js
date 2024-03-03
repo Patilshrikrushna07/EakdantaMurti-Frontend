@@ -11,7 +11,6 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from 'next/link';
 
-
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -51,7 +50,7 @@ const Login = () => {
 
         <FormControl className="w-full my-[2vh]" variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
-            Password
+            Enter Password
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
@@ -95,6 +94,21 @@ const Login = () => {
         </Link>
       </h1>
 
+      <div className="mt-[5vh]">
+        <div className="relative">
+          <hr className="h-[0.5vh]" />
+          <p className="text-center absolute text-gray-500 font-medium text-[2.6vh] -top-[2vh] left-[42%] bg-white px-[1vh]">
+            Log in with
+          </p>
+        </div>
+
+        <div className="flex flex-row justify-center items-center gap-x-[2vh] mt-[4vh] bg-orange-100 py-[1vh] rounded-lg shadow-md">
+          <img src="/google.png" className="w-[3.7vh] h-[3.7vh]" alt="" />
+          <p className="text-[2.7vh] font-semibold text-gray-700">
+            Continue with Google
+          </p>
+        </div>
+      </div>
       
     </div>
   );
