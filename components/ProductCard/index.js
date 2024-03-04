@@ -9,11 +9,11 @@ const ProductCard = ({ product }) => {
       ? description.substring(0, 40) + "..."
       : description;
 
+  const truncatedName = name.length > 16 ? name.substring(0, 16) + "..." : name;
+
   return (
     <Link href="/productdetails/[id]" as={`/productdetails/${_id}`}>
-      <div
-        className="relative cursor-pointer bg-gray-100 shadow-lg w-[30vh] mb-[10vh]"
-      >
+      <div className="relative cursor-pointer bg-gray-100 shadow-lg w-[30vh] mb-[10vh]">
         <div>
           <img src={images[0]} className="h-[35vh] w-[30vh] object-cover" />
         </div>
@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
           30%
         </p>
         <h1 className="px-[1vh]  text-[2.8vh] text-[#111] font-semibold my-[1vh]">
-          {name}
+          {truncatedName}
         </h1>
         <p className="px-[1vh] text-[2.1vh] text-gray-600 font-normal mb-[1vh]">
           {truncatedDescription}
