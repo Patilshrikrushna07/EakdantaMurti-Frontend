@@ -37,7 +37,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="mx-[6vh] mt-[2vh]">
+    <div className="mx-[6vh]">
       <h1 className="text-[4vh] mb-[1.5vh] font-semibold text-[#313131]">
         Create Account
       </h1>
@@ -63,13 +63,6 @@ const SignUp = () => {
           <TextField
             id="outlined-basic"
             label="Enter Email Address"
-            variant="outlined"
-            className="w-full my-[1vh]"
-          />
-
-          <TextField
-            id="outlined-basic"
-            label="Enter Phone Number"
             variant="outlined"
             className="w-full my-[1vh]"
           />
