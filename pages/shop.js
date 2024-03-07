@@ -41,7 +41,7 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        products: products || [], 
+        products: products || [],
       },
     };
   } catch (error) {

@@ -12,9 +12,30 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 
-const SignUp = () => {
+const SignUp = ({onComplete}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    first_name:"",
+    last_name:"",
+    mobile_number:"",
+    email:"",
+    city:"",
+    address:"",
+    state:"",
+    pincode:"",
+    profile_image:"",
+    password:""
+  });
+
+  const handleChange =(e)=>{
+    const {name,value} = e.target;
+    setFormData((prevData)=>({
+      ...prevData,
+      [name]:value
+    }));
+  }
 
   const handleClickShowPassword = (variant) => {
     setShowPassword((show) => !show);
@@ -25,15 +46,20 @@ const SignUp = () => {
   };
 
   const handleCreateAccount = () => {
-    // Simulate login process
-    setLoading(true);
-    setTimeout(() => {
-      // After some time (simulating asynchronous process)
+    try {
+      setTimeout(()=>{
+        setLoading(false);
+        toast.success("Account Created Successfully!",{
+          position:"bottom-left"
+        })
+        onComplete(formData)
+      },1000);
+
+    } catch (error) {
+      console.error("Error creating account:",error);
       setLoading(false);
-      toast.success("Account Created Successfully!!", {
-        position: "bottom-left",
-      });
-    }, 2000); // Adjust time as per your requirement
+      toast.error("Failed to create account, Please try again later")
+    }
   };
 
   return (
@@ -49,6 +75,9 @@ const SignUp = () => {
             label="Enter First Name"
             variant="outlined"
             className="w-full my-[1vh]"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
           />
 
           <TextField
@@ -56,6 +85,9 @@ const SignUp = () => {
             label="Enter Last Name"
             variant="outlined"
             className="w-full my-[1vh]"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
           />
         </div>
 
@@ -65,6 +97,9 @@ const SignUp = () => {
             label="Enter Email Address"
             variant="outlined"
             className="w-full my-[1vh]"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
 
@@ -89,6 +124,9 @@ const SignUp = () => {
                 </InputAdornment>
               }
               label="Password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
             />
           </FormControl>
 
