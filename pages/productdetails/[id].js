@@ -117,10 +117,10 @@ export default function ProductDetails({ product }) {
           </div>
         </div>
         <div className="flex flex-row space-x-5">
-          <button className="px-[4.8vh] py-[1.2vh] shadow-sm text-[2.8vh] rounded-xl border-[0.3vh] border-[#2424248f] text-[#242424] hover:scale-105 ">
+          <button className="md:px-[4.8vh] md:py-[1.2vh] px-[2vh] py-[1vh] shadow-sm md:text-[2.8vh] rounded-xl border-[0.3vh] border-[#2424248f] text-[#242424] hover:scale-105 ">
             Add To Cart
           </button>
-          <button className="px-[5.5vh] py-[1.3vh] shadow-md font-semibold text-[3vh] rounded-xl  text-[#fef8f8] bg-[#B88E2F] hover:scale-105">
+          <button className="md:px-[5.5vh] md:py-[1.3vh] px-[3vh] py-[1vh] shadow-md font-semibold md:text-[3vh] rounded-xl  text-[#fef8f8] bg-[#B88E2F] hover:scale-105">
             Buy Now!
           </button>
         </div>

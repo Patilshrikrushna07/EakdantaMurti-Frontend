@@ -17,9 +17,13 @@ export default function Shop({ products }) {
   }
 
   return (
-    <div className="w-[90%] mx-auto">
-      <h1 className="text-[4vh] my-[3vh] text-center">This is Product Page</h1>
-      <div className="flex flex-row justify-center gap-x-[3vh]">
+    <div className="mx-[2vh]">
+      <div className="bg-[url('/backgroundbanner.jpg')] md:bg-cover  md:bg-center bg-cover bg-no-repeat bg-center h-[9vh] md:h-[35vh]  flex justify-center items-center ">
+        <p className=" md:text-[7vh] text-[3vh] text-center align-middle ">Shop</p>
+      </div>
+      <h2 className=" md:text-[6vh] mt-[5vh] font-bold font-sans text-[3vh] text-center align-middle text-[#3A3A3A]">Our Murtis</h2>
+
+      <div className="flex flex-wrap my-[2vh] md:my-[5vh] md:flex-row justify-center items-center gap-[2vh] md:gap-[5vh]  ">
         {productsArray.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
@@ -41,7 +45,7 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        products: products || [], 
+        products: products || [],
       },
     };
   } catch (error) {
