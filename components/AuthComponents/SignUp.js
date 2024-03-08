@@ -11,8 +11,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-const SignUp = ({ onComplete }) => {
+const SignUp = () => {
+
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -89,6 +92,7 @@ const SignUp = ({ onComplete }) => {
           password: "",
           confirmPassword: "",
         });
+        router.push("/login");
 
       } else if (response.status === 409) {
         toast.warning("User already exists");
