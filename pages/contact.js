@@ -82,7 +82,7 @@ export default function contact() {
   return (
     <div className="overflow-hidden ">
       <div className="bg-[url('/backgroundbanner.jpg')] md:bg-cover  md:bg-center bg-cover bg-no-repeat bg-center h-[9vh] md:h-[35vh]  flex justify-center items-center ">
-        <p className=" md:text-[8vh] text-[3vh] text-center align-middle ">Conatct Us</p></div>
+        <p className=" md:text-[8vh] text-[3vh] text-center align-middle ">Contact Us</p></div>
       <div className="flex flex-col-reverse md:flex-row md:justify-evenly justify-center items-center mt-[2vh]">
         <div
           className="flex flex-col space-y-6 p-[6vh] rounded-3xl bg-[#F9F1E7] my-[5vh] shadow-lg"
