@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
 import ShareIcon from "@mui/icons-material/Share";
+import { useStateContext } from "@/context/StateContext";
+import { toast } from "react-hot-toast";
+import Link from "next/link";
+
 
 export default function ProductDetails({ product }) {
   console.log("Product received in ProductDetails:", product);
@@ -33,6 +37,19 @@ export default function ProductDetails({ product }) {
       console.error("Error sharing:", error);
     }
   };
+
+  const { onAdd, qty } = useStateContext();
+
+  const addToCart = () => {
+    // if (!selectedSize) {
+    //   toast.error("Please select size!");
+    // } else {
+    //   onAdd({ ...product, selectedSize }, qty);
+    // }
+    onAdd({ ...product, selectedSize }, qty);
+  };
+  const [selectedSize, setSelectedSize] = useState(null)
+
 
   return (
     <div className="md:mx-[15vh] m-[5vh] md:my-10  flex md:flex-row flex-col gap-x-[3vh]">
@@ -74,7 +91,7 @@ export default function ProductDetails({ product }) {
           </div>
           {selectedImage && (
             <img
-              className="md:w-[70vw] h-full"
+              className="md:w-[70vw] h-[70vh] object-cover object-top"
               src={selectedImage}
               alt={name}
             />
@@ -101,12 +118,13 @@ export default function ProductDetails({ product }) {
             Size
           </h1>
           <div className="flex flex-row space-x-4 my-[1vh]">
-            <p className="bg-[#F9F1E7] p-[2vh]">12 inch</p>
+            {/* <button onClick={() => setSelectedSize("12 inch")} className={`bg-[#F9F1E7] p-[2vh] ${selectedSize ? "border-2 border-black" : ""}`}>12 inch</button> */}
+            <p className="bg-[#F9F1E7] p-[2vh] ">12 inch</p>
             <p className="bg-[#F9F1E7] p-[2vh]">8 inch</p>
             <p className="bg-[#F9F1E7] p-[2vh] ">6 inch</p>
           </div>
         </div>
-        <div>
+        {/* <div>
           <h1 className=" text-[2.5vh] text-[#878787] font-semibold font-poppins">
             Color
           </h1>
@@ -115,14 +133,16 @@ export default function ProductDetails({ product }) {
             <span className="bg-[#242323] p-[2vh] rounded-full"></span>
             <span className="bg-[#B88E2F] p-[2vh] rounded-full "> </span>
           </div>
-        </div>
+        </div> */}
         <div className="flex flex-row space-x-5">
-          <button className="md:px-[4.8vh] md:py-[1.2vh] px-[2vh] py-[1vh] shadow-sm md:text-[2.8vh] rounded-xl border-[0.3vh] border-[#2424248f] text-[#242424] hover:scale-105 ">
+          <button  onClick={addToCart} className="md:px-[4.8vh] md:py-[1.2vh] px-[2vh] py-[1vh] shadow-sm md:text-[2.8vh] rounded-xl border-[0.3vh] border-[#2424248f] text-[#242424] hover:scale-105 ">
             Add To Cart
           </button>
-          <button className="md:px-[5.5vh] md:py-[1.3vh] px-[3vh] py-[1vh] shadow-md font-semibold md:text-[3vh] rounded-xl  text-[#fef8f8] bg-[#B88E2F] hover:scale-105">
+          <Link href="/checkout">
+          <button onClick={addToCart} className="md:px-[5.5vh] md:py-[1.3vh] px-[3vh] py-[1vh] shadow-md font-semibold md:text-[3vh] rounded-xl  text-[#fef8f8] bg-[#B88E2F] hover:scale-105">
             Buy Now!
           </button>
+          </Link>
         </div>
       </div>
     </div>

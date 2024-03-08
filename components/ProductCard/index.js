@@ -5,8 +5,8 @@ import Link from "next/link";
 const ProductCard = ({ product }) => {
   const { _id, name, images, description, price } = product;
   const truncatedDescription =
-    description.length > 40
-      ? description.substring(0, 35) + "..."
+    description.length > 50
+      ? description.substring(0, 50) + "..."
       : description;
 
   const truncatedName = name.length > 15 ? name.substring(0, 15) + "..." : name;

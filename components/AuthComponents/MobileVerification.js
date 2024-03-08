@@ -3,13 +3,14 @@ import { toast } from "react-hot-toast";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 
-export default function MobileVerification({onComplete}) {
+export default function MobileVerification({onComplete, userData}) {
   const numberOfOtpFields = 6;
   const otpFields = Array.from({ length: numberOfOtpFields }, (_, i) => i);
   const otpRefs = useRef([]);
   const [mobileNumberEntered, setMobileNumberEntered] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [mobileNumber, setMobileNumber] = useState("");
 
   useEffect(() => {
     otpRefs.current = otpRefs.current
@@ -39,19 +40,33 @@ export default function MobileVerification({onComplete}) {
     }
   };
 
-  const handleVerify = () => {
-    // Simulate login process
+  const handleVerify = async() => {
     setLoading(true);
-    setTimeout(() => {
-      // After some time (simulating asynchronous process)
+    try {
+      if(!mobileNumber.trim()){
+        toast.error("Please enter mobile number.");
+        setLoading(false);
+        return;
+      }
+
+      setTimeout(()=>{
+        setLoading(false);
+        toast.success("Mobile Number Verified Successfully",{
+          position:"top-center",
+        });
+      })
+      onComplete()
+    } catch (error) {
+      console.error("Error verifying mobile number",error);
       setLoading(false);
-      toast.success("Mobile Number Verified Successfully", {
-        position: "top-center",
-      });
-      onComplete();
-    }, 2000);
+      toast.error("Failed to verify mobile number")
+    }
     
   };
+
+  const handleChangeMobileNumber = (event)=>{
+    setMobileNumber(event.target.value);
+  }
 
   return (
     <div className="mx-[6vh]">
@@ -64,6 +79,8 @@ export default function MobileVerification({onComplete}) {
             id="outlined-basic"
             label="Enter Mobile Number"
             variant="outlined"
+            value={mobileNumber}
+            onChange={(e)=>setMobileNumber(e.target.value)}
             className="w-full my-[1.5vh]"
           />
           <button
