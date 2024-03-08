@@ -1,30 +1,13 @@
 import React, { useState } from "react";
 import SignUp from "../components/AuthComponents/SignUp";
 import AuthBg from "../components/AuthComponents/AuthBg";
-import MobileVerification from "../components/AuthComponents/MobileVerification";
 
 const SignUpPage = ({userData}) => {
-
-  const [mobileVerificationDone, setMobileVerificationDone] = useState(false);
-
-  const handleVerification = () => {
-    setMobileVerificationDone(true);
-  };
-
-  console.log("User Data", userData);
-
-  const handleComplete = (formData)=>{
-    console.log("Form Data:",formData)
-  }
 
   return (
     <div className="flex flex-row items-center overflow-y-hidden">
       <div className="w-[50%]">
-        {mobileVerificationDone ? (
-          <SignUp userData={userData} onComplete={handleComplete}/>
-        ):(
-          <MobileVerification userData={userData} onComplete={handleVerification}/>
-        )}
+        <SignUp/>
       </div>
       <AuthBg />
     </div>

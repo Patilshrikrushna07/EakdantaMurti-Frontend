@@ -12,30 +12,33 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 
-const SignUp = ({onComplete}) => {
+const SignUp = ({ onComplete }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    first_name:"",
-    last_name:"",
-    mobile_number:"",
-    email:"",
-    city:"",
-    address:"",
-    state:"",
-    pincode:"",
-    profile_image:"",
-    password:""
+    first_name: "",
+    last_name: "",
+    email: "",
+    mobile_number: "",
+    city: "",
+    country: "",
+    address: "",
+    state: "",
+    pincode: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const handleChange =(e)=>{
-    const {name,value} = e.target;
-    setFormData((prevData)=>({
+  const [error,setError]= useState("")
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
       ...prevData,
-      [name]:value
+      [name]: value,
     }));
-  }
+  };
 
   const handleClickShowPassword = (variant) => {
     setShowPassword((show) => !show);
@@ -45,20 +48,58 @@ const SignUp = ({onComplete}) => {
     event.preventDefault();
   };
 
-  const handleCreateAccount = () => {
-    try {
-      setTimeout(()=>{
-        setLoading(false);
-        toast.success("Account Created Successfully!",{
-          position:"bottom-left"
-        })
-        onComplete(formData)
-      },1000);
+  const handleCreateAccount = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // Perform client-side validation
+    if (!formData.password || !formData.confirmPassword) {
+      setError("Password is required");
+      toast.error("Password is required")
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      toast.error("Password do not match")
+      return;
+    }
 
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const response = await fetch(`${apiUrl}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("User registered successfully!");
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          mobile_number: "",
+          city: "",
+          country: "",
+          address: "",
+          state: "",
+          pincode: "",
+          password: "",
+          confirmPassword: "",
+        });
+
+      } else if (response.status === 409) {
+        toast.warning("User already exists");
+      } else {
+        toast.error("Error registering user");
+      }
     } catch (error) {
-      console.error("Error creating account:",error);
-      setLoading(false);
-      toast.error("Failed to create account, Please try again later")
+      console.error("Error registering user:", error);
+      toast.error("Error registering user");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -68,7 +109,7 @@ const SignUp = ({onComplete}) => {
         Create Account
       </h1>
 
-      <div>
+      <form onSubmit={handleCreateAccount}>
         <div className="flex flex-row gap-[1vh]">
           <TextField
             id="outlined-basic"
@@ -78,6 +119,7 @@ const SignUp = ({onComplete}) => {
             name="first_name"
             value={formData.first_name}
             onChange={handleChange}
+            required
           />
 
           <TextField
@@ -88,6 +130,7 @@ const SignUp = ({onComplete}) => {
             name="last_name"
             value={formData.last_name}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -100,10 +143,21 @@ const SignUp = ({onComplete}) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            required
+          />
+          <TextField
+            id="outlined-basic"
+            label="Enter Mobile Number"
+            variant="outlined"
+            className="w-full my-[1vh]"
+            name="mobile_number"
+            value={formData.mobile_number}
+            onChange={handleChange}
+            required
           />
         </div>
 
-        <div>
+        <div className="flex flex-row gap-x-[1.5vh]">
           <FormControl className="w-full my-[1vh]" variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Create Password
@@ -127,6 +181,7 @@ const SignUp = ({onComplete}) => {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              required
             />
           </FormControl>
 
@@ -150,13 +205,76 @@ const SignUp = ({onComplete}) => {
                 </InputAdornment>
               }
               label="Password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
             />
           </FormControl>
         </div>
 
+        <div className="flex flex-row gap-x-[1.5vh]">
+          <TextField
+            id="outlined-basic"
+            label="Enter City"
+            variant="outlined"
+            className="w-full my-[1vh]"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            id="outlined-basic"
+            label="Enter Pincode"
+            variant="outlined"
+            className="w-full my-[1vh]"
+            name="pincode"
+            value={formData.pincode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <TextField
+            id="outlined-basic"
+            label="Enter Address"
+            variant="outlined"
+            className="w-full my-[1vh]"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="flex flex-row gap-x-[1.5vh]">
+          <TextField
+            id="outlined-basic"
+            label="Enter State"
+            variant="outlined"
+            className="w-full my-[1vh]"
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            id="outlined-basic"
+            label="Enter Country"
+            variant="outlined"
+            className="w-full my-[1vh]"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <button
           className="bg-[#422c12] active:bg-[#291b0b] w-full my-[1vh] h-[7vh] rounded-md"
-          onClick={() => handleCreateAccount()}
+          type="submit"
         >
           {loading ? (
             <CircularProgress
@@ -168,7 +286,7 @@ const SignUp = ({onComplete}) => {
             <p className="text-white text-[2.9vh]">CreateAccount</p>
           )}
         </button>
-      </div>
+      </form>
 
       <h1 className="text-center text-[2.7vh] my-[3vh]">
         Already have an Account?{" "}
@@ -177,7 +295,7 @@ const SignUp = ({onComplete}) => {
         </Link>
       </h1>
 
-      <div className="mt-[5vh]">
+      {/* <div className="mt-[5vh]">
         <div className="relative">
           <hr className="h-[0.5vh]" />
           <p className="text-center absolute text-gray-500 font-medium text-[2.6vh] -top-[2vh] left-[42%] bg-white px-[1vh]">
@@ -191,7 +309,7 @@ const SignUp = ({onComplete}) => {
             Continue with Google
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
