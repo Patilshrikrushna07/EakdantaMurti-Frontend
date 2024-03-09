@@ -9,9 +9,7 @@ export default function OrderDetail() {
   const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
-
-
+  
   return (
     <div>
       <h1 className="text-[4vh] font-semibold my-[4vh] text-center">

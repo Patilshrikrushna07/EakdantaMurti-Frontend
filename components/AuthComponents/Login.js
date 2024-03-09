@@ -10,11 +10,27 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from 'next/link';
+import { Password } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 const Login = () => {
 
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email:"",
+    password:"",
+  })
+
+  const handleChange=(e)=>{
+    const {name,value}=e.target;
+    setFormData((prevData)=>({
+      ...prevData,
+      [name]:value,
+    }));
+  }
   
   const handleClickShowPassword = (variant) =>{
     setShowPassword((show) => !show);
@@ -24,14 +40,32 @@ const Login = () => {
     event.preventDefault();
   };
 
-  const handleLogin = () => {
-    // Simulate login process
+  const handleLogin = async () => {
     setLoading(true);
-    setTimeout(() => {
-      // After some time (simulating asynchronous process)
-      setLoading(false);
-      toast.success("Login Successful",{position:'bottom-left'})
-    }, 2000); // Adjust time as per your requirement
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const response = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        toast.success(data.message);
+        toast.success("Login Successful")
+        router.push("/admin");
+      } else {
+        toast.error(data.message);
+        // Redirect to signup page if user doesn't exist
+        router.push("/signup");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error("Error logging in");
+    }
+    setLoading(false);
   };
 
   return (
@@ -46,6 +80,8 @@ const Login = () => {
           label="Enter Email Address"
           variant="outlined"
           className="w-full my-[2vh]"
+          value={formData.email}
+          onChange={handleChange}
         />
 
         <FormControl className="w-full my-[2vh]" variant="outlined">
@@ -68,12 +104,15 @@ const Login = () => {
               </InputAdornment>
             }
             label="Password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
           />
         </FormControl>
 
         <button
           className="bg-[#422c12] active:bg-[#291b0b] w-full h-[7vh] rounded-md"
-          onClick={()=>handleLogin()}
+          onClick={handleLogin}
         >
           {loading ? (
             <CircularProgress
@@ -94,7 +133,7 @@ const Login = () => {
         </Link>
       </h1>
 
-      <div className="mt-[5vh]">
+      {/* <div className="mt-[5vh]">
         <div className="relative">
           <hr className="h-[0.5vh]" />
           <p className="text-center absolute text-gray-500 font-medium text-[2.6vh] -top-[2vh] left-[42%] bg-white px-[1vh]">
@@ -108,7 +147,7 @@ const Login = () => {
             Continue with Google
           </p>
         </div>
-      </div>
+      </div> */}
       
     </div>
   );
