@@ -7,9 +7,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Link from "next/link";
 import { useStateContext } from "../../context/StateContext";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
-  const { totalQuantities } = useStateContext();
+
+  const {totalQuantities}= useStateContext();
+
   return (
     <div className="bg-white shadow-md mb-[1vh] static">
       <div className="p-[2vh] w-[90%] mx-auto flex flex-row justify-between items-center">
@@ -33,6 +36,7 @@ const Navbar = () => {
               <ShoppingBagIcon className="cursor-pointer text-orange-300 text-[4.5vh]" />
             </div>
           </Link>
+          
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const SignUp = () => {
 
@@ -92,6 +93,7 @@ const SignUp = () => {
           password: "",
           confirmPassword: "",
         });
+        Cookies.set("userData", formData);
         router.push("/login");
 
       } else if (response.status === 409) {
