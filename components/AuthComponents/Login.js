@@ -9,63 +9,73 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
-import Link from 'next/link';
+import Link from "next/link";
 import { Password } from "@mui/icons-material";
 import { useRouter } from "next/router";
 
 const Login = () => {
-
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    email:"",
-    password:"",
-  })
+    email: "",
+    password: "",
+  });
 
-  const handleChange=(e)=>{
-    const {name,value}=e.target;
-    setFormData((prevData)=>({
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
       ...prevData,
-      [name]:value,
+      [name]: value,
     }));
-  }
-  
-  const handleClickShowPassword = (variant) =>{
+  };
+
+  const handleClickShowPassword = (variant) => {
     setShowPassword((show) => !show);
-  } 
+  };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   const handleLogin = async () => {
     setLoading(true);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const response = await fetch(`${apiUrl}/login`, {
+
+      const loginResponse = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
-      if (response.ok) {
-        toast.success(data.message);
-        toast.success("Login Successful")
-        router.push("/admin");
+
+      if (loginResponse.ok) {
+        const loginData = await loginResponse.json();
+        sessionStorage.setItem("userData", JSON.stringify(loginData));
+        const {isAdmin}=loginData;
+        if(isAdmin){
+          router.push("/admin");
+        }else{
+          router.push("/")
+        }
+        toast.success("Login successful");
       } else {
-        toast.error(data.message);
-        // Redirect to signup page if user doesn't exist
-        router.push("/signup");
+        toast.error("Invalid email or password");
       }
     } catch (error) {
       console.error("Error logging in:", error);
       toast.error("Error logging in");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -74,12 +84,13 @@ const Login = () => {
         Login
       </h1>
 
-      <div>
+      <form onSubmit={handleSubmit}>
         <TextField
           id="outlined-basic"
           label="Enter Email Address"
           variant="outlined"
           className="w-full my-[2vh]"
+          name="email"
           value={formData.email}
           onChange={handleChange}
         />
@@ -112,7 +123,7 @@ const Login = () => {
 
         <button
           className="bg-[#422c12] active:bg-[#291b0b] w-full h-[7vh] rounded-md"
-          onClick={handleLogin}
+          type="submit"
         >
           {loading ? (
             <CircularProgress
@@ -124,7 +135,7 @@ const Login = () => {
             <p className="text-white text-[2.9vh]">Login</p>
           )}
         </button>
-      </div>
+      </form>
 
       <h1 className="text-center text-[2.7vh] my-[3vh]">
         Didn't have an Account ?{" "}
@@ -148,7 +159,6 @@ const Login = () => {
           </p>
         </div>
       </div> */}
-      
     </div>
   );
 };
