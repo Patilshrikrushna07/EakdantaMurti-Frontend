@@ -3,7 +3,6 @@ import Link from 'next/link';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -12,9 +11,9 @@ import { Dashboard } from './SidebarComponent/Dashboard';
 import { Order } from './SidebarComponent/Order';
 import AddProduct from './SidebarComponent/AddProduct';
 
-const Sidebar = () => {
-  const [activeComponent, setActiveComponent] = useState(null); // State to hold the active component
-
+const Sidebar = ({products}) => {
+  const [activeComponent, setActiveComponent] = useState(Dashboard); // State to hold the active component
+  console.log('PRODUCT',products);
   const handleComponentChange = (component) => {
     setActiveComponent(component);
   };
@@ -41,7 +40,7 @@ const Sidebar = () => {
               </div>
             </li>
             <li className="px-4 py-2">
-            <div onClick={() => handleComponentChange(<AddProduct />)} className="cursor-pointer">
+            <div onClick={() => handleComponentChange(<AddProduct products={products}/>)} className="cursor-pointer">
             <StorefrontIcon className="mr-2" />
                 Add Product
               </div>
@@ -83,9 +82,10 @@ const Sidebar = () => {
       </div>
 
       {/* Active Component */}
-      <div className="ml-64 p-8">
+      <div className="ml-2 p-8">
         {activeComponent}
       </div>
+     
     </div>
   );
 };
