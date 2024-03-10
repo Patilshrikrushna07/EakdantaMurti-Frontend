@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
+import { toast } from "react-hot-toast";
 
 export default function AddProduct({ products }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
+
+  const [formData, setFormData] = useState({
+    productName: "",
+    productPrice: "",
+    productDescription: "",
+    productBrand: "",
+    productCategory: "",
+    productSize: "",
+    productQuantity: "",
+    selectedImages: [],
+  })
 
   const openModal = () => {
     setShowModal(true);
@@ -16,16 +28,56 @@ export default function AddProduct({ products }) {
 
   const handleImageChange = (event) => {
     const files = event.target.files;
-    setSelectedImages([...selectedImages, ...files]);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      selectedImages: [...prevFormData.selectedImages, ...files],
+    }));
   };
 
   const removeImage = (indexToRemove) => {
-    setSelectedImages(
-      selectedImages.filter((_, index) => index !== indexToRemove)
-    );
+    setFormData((prevFormData)=>({
+      ...prevFormData,
+      selectedImages: prevFormData.selectedImages.filter(
+        (_, index) => index !== indexToRemove
+      ),
+    }))
+    
   };
 
-  console.log("Products fetch successfully", products);
+  const uploadProduct=async()=>{
+    try {
+      const formDataToUpload = new FormData();
+      formDataToUpload.append("name", formData.productName);
+      formDataToUpload.append("price", formData.productPrice);
+      formDataToUpload.append("description", formData.productDescription);
+      formDataToUpload.append("brand", formData.productBrand);
+      formDataToUpload.append("category", formData.productCategory);
+      formDataToUpload.append("size", formData.productSize);
+      formDataToUpload.append("stock_quantity", formData.productQuantity);
+      formData.selectedImages.forEach((image) =>
+        formDataToUpload.append("images", image)
+      );
+
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const response = await fetch(`${apiUrl}/create-product`,{
+        method:"POST",
+        body:formDataToUpload
+      });
+
+      if(!response.ok){
+        throw new Error("Failed to upload Product")
+      }
+
+      closeModal();
+      toast.success("Product Added Successfully")
+
+      console.log("Product Added Successfully");
+    } catch (error) {
+      console.error("Error uploading product:", error);
+    }
+  }
+
+  // console.log("Products fetch successfully", products);
   const productsArray = products.data;
 
   return (
@@ -107,7 +159,7 @@ export default function AddProduct({ products }) {
                 </div>
 
                 <div className=" flex flex-row gap-[1vh] my-[2vh] ">
-                  {selectedImages.map((image, index) => (
+                  {formData.selectedImages.map((image, index) => (
                     <div key={index} className="relative inline-block mr-[1vh]">
                       <img
                         src={URL.createObjectURL(image)}
@@ -129,12 +181,27 @@ export default function AddProduct({ products }) {
                     label="Enter Product Name"
                     variant="outlined"
                     className="w-full"
+                    value={formData.productName}
+                    onChange={(e) =>
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        productName: e.target.value,
+                      }))
+                    }
+
                   />
                   <TextField
                     id="outlined-basic"
                     label="Enter Product Price"
                     variant="outlined"
                     className="w-full"
+                    value={formData.productPrice}
+                    onChange={(e) =>
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        productPrice: e.target.value,
+                      }))
+                    }
                   />
                 </div>
 
@@ -143,6 +210,13 @@ export default function AddProduct({ products }) {
                   label="Enter Product Description"
                   variant="outlined"
                   className="w-full mt-[2vh]"
+                  value={formData.productDescription}
+                  onChange={(e) =>
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      productDescription: e.target.value,
+                    }))
+                  }
                 />
 
                 <div className="flex flex-row gap-[1vh] my-[2vh]">
@@ -151,12 +225,26 @@ export default function AddProduct({ products }) {
                     label="Enter Product Brand"
                     variant="outlined"
                     className="w-full"
+                    value={formData.productBrand}
+                    onChange={(e) =>
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        productBrand: e.target.value,
+                      }))
+                    }
                   />
                   <TextField
                     id="outlined-basic"
                     label="Enter Product Category"
                     variant="outlined"
                     className="w-full"
+                    value={formData.productCategory}
+                    onChange={(e) =>
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        productCategory: e.target.value,
+                      }))
+                    }
                   />
                 </div>
 
@@ -166,17 +254,31 @@ export default function AddProduct({ products }) {
                     label="Enter Product Size"
                     variant="outlined"
                     className="w-full"
+                    value={formData.productSize}
+                    onChange={(e) =>
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        productSize: e.target.value,
+                      }))
+                    }
                   />
                   <TextField
                     id="outlined-basic"
                     label="Enter Product Quantity"
                     variant="outlined"
                     className="w-full"
+                    value={formData.productQuantity}
+                    onChange={(e) =>
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        productQuantity: e.target.value,
+                      }))
+                    }
                   />
                 </div>
 
-                <button className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600">
-                  Upload Product
+                <button onClick={uploadProduct} className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600">
+                  Save Changes
                 </button>
               </div>
             </div>
