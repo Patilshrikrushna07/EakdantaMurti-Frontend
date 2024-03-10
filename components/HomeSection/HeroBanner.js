@@ -11,7 +11,7 @@ const HeroBanner = () => {
   ];
 
   return (
-    <div>
+    <div >
       <div className="flex flex-row md:h-[90vh]  overflow-hidden">
         {images.map((image) => (
           <img key={image.id} src={image.source} alt={`Banner ${image.id}`} />
