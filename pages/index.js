@@ -4,6 +4,7 @@ import Homesale from "../components/HomeSection/Homesale";
 import { ProductCard } from "../components";
 import Link from "next/link";
 import Inspirations from "../components/HomeSection/Inspirations";
+import { NewArrivalSale } from "../components/HomeSection/NewArrivalSale";
 
 export default function Home({ products }) {
   const productsArray = products.data.slice(0, 6);
@@ -26,7 +27,8 @@ export default function Home({ products }) {
           <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-105 mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[10vw]">Show More</p>
         </Link>
       </div>
-      <Inspirations/>
+      <Inspirations />
+      <NewArrivalSale/>
     </div>
   );
 }
