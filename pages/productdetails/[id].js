@@ -123,6 +123,7 @@ export default function ProductDetails({ product }) {
             <p className="bg-[#F9F1E7] p-[2vh]">8 inch</p>
             <p className="bg-[#F9F1E7] p-[2vh] ">6 inch</p>
           </div>
+         
         </div>
         {/* <div>
           <h1 className=" text-[2.5vh] text-[#878787] font-semibold font-poppins">

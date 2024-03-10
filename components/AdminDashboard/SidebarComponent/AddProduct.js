@@ -78,10 +78,10 @@ export default function AddProduct({ products }) {
   }
 
   // console.log("Products fetch successfully", products);
-  const productsArray = products.data;
+  const productsArray = products ? products.data : [];
 
   return (
-    <div className="w-[90%] relative mx-auto my-[5vh]">
+    <div className=" relative mx-auto my-[5vh]">
       <h1 className="text-[3.6vh] font-semibold text-center text-[#2a2a2a]">
         EkdantaMurti - Products
       </h1>
