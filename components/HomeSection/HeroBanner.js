@@ -12,7 +12,7 @@ const HeroBanner = () => {
 
   return (
     <div>
-      <div className="flex flex-row h-[90vh] ">
+      <div className="flex flex-row md:h-[90vh]  overflow-hidden">
         {images.map((image) => (
           <img key={image.id} src={image.source} alt={`Banner ${image.id}`} />
         ))}
@@ -21,7 +21,7 @@ const HeroBanner = () => {
         <h3 className="text-[#333333]">New Arrival</h3>
         <h1 className="text-[#846a28] text-[3.5vh] md:text-[6.5vh] font-bold font-mono leading-tight">Discover Our New Collection</h1>
         <p className="text-[#333333]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-        <Link href='/shop'><button className="bg-[#B88E2F] text-white font-bold md:w-[10vw] p-[3vh]">PRE BOOK</button>
+        <Link href='/shop'><button className="bg-[#B88E2F] text-white font-bold md:w-[10vw] md:p-[3vh] p-[1.5vh]">PRE BOOK</button>
         </Link>
       </div>
 
