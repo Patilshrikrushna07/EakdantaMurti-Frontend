@@ -1,6 +1,6 @@
 import React from "react";
 import HeroBanner from "../components/HomeSection/HeroBanner";
-import Homesale from "../components/HomeSection/Homesale";
+import HomeSaleAd from "../components/HomeSection/HomeSaleAd";
 import { ProductCard } from "../components";
 import Link from "next/link";
 import Inspirations from "../components/HomeSection/Inspirations";
@@ -13,22 +13,24 @@ export default function Home({ products }) {
   return (
     <div>
       <HeroBanner />
-      <Homesale />
+      <HomeSaleAd />
       <div>
-        <h1 className="text-center font-poppins font-bold md:text-[6vh] text-[3vh]">
+        <h1 className="text-center font-poppins font-bold md:text-[6vh] my-[3vh] text-[3vh]">
           Our Murtis
         </h1>
-        <div className="md:w-[80%] overflow-hidden mx-auto flex flex-wrap  md:my-[5vh] md:flex-row justify-center items-center gap-[2vh] md:gap-[5vh]  ">
+        <div className="md:w-[80%] w-[90%] overflow-hidden mx-auto flex flex-wrap  md:my-[5vh] md:flex-row justify-center items-center gap-[2vh] md:gap-[5vh]  ">
           {productsArray.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
-        <Link href="/shop" >
-          <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-105 mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[10vw]">Show More</p>
+        <Link href="/shop">
+          <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-105 mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[10vw]">
+            Show More
+          </p>
         </Link>
       </div>
       <Inspirations />
-      <NewArrivalSale/>
+      <NewArrivalSale />
     </div>
   );
 }
