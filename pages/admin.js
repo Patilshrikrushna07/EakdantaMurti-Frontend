@@ -7,7 +7,7 @@ import AddProduct from '@/components/AdminDashboard/SidebarComponent/AddProduct'
 export default function AdminPanel({products}) {
 
   return (
-    <div>
+    <div className='bg-[#fffffff8]'>
       <Sidebar products={products}/>
     </div>
   )
