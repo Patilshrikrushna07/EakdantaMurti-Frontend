@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-hot-toast";
+// import cloudinary from "cloudinary";
 
 export default function AddProduct({ products }) {
+
+  const cloudinaryCloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const cloudinaryApiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
+  const cloudinaryApiSecret = process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET;
+
+
   const [showModal, setShowModal] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
 
@@ -26,12 +33,23 @@ export default function AddProduct({ products }) {
     setShowModal(false);
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const files = event.target.files;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      selectedImages: [...prevFormData.selectedImages, ...files],
-    }));
+    const uploadedImages=[];
+
+    try {
+      // for(const file of files){
+      //   const result = await cloudinary.uploader.upload(file,{folder:"products"});
+      //   uploadedImages.push(result.secure_url);
+      // }
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        selectedImages: [...prevFormData.selectedImages, ...files],
+      }));
+    } catch (error) {
+      console.log("Error uploading images to Cloudinary:",error)
+    }
+    
   };
 
   const removeImage = (indexToRemove) => {
@@ -46,6 +64,22 @@ export default function AddProduct({ products }) {
 
   const uploadProduct=async()=>{
     try {
+
+      if(
+        !formData.productName ||
+        !formData.productPrice ||
+        !formData.productDescription ||
+        !formData.productBrand ||
+        !formData.productCategory ||
+        !formData.productSize ||
+        !formData.productQuantity ||
+        formData.selectedImages.length === 0
+      ){
+        toast.error("Please fill all required fields")
+        return;
+      }
+      
+
       const formDataToUpload = new FormData();
       formDataToUpload.append("name", formData.productName);
       formDataToUpload.append("price", formData.productPrice);
@@ -54,8 +88,9 @@ export default function AddProduct({ products }) {
       formDataToUpload.append("category", formData.productCategory);
       formDataToUpload.append("size", formData.productSize);
       formDataToUpload.append("stock_quantity", formData.productQuantity);
-      formData.selectedImages.forEach((image) =>
-        formDataToUpload.append("images", image)
+      
+      formData.selectedImages.forEach((imageUrl) =>
+        formDataToUpload.append("images", imageUrl)
       );
 
       const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -68,8 +103,20 @@ export default function AddProduct({ products }) {
         throw new Error("Failed to upload Product")
       }
 
-      closeModal();
-      toast.success("Product Added Successfully")
+      if(response.ok){
+        closeModal();
+        toast.success("Product Added Successfully");
+        setFormData({
+          productName: "",
+          productPrice: "",
+          productDescription: "",
+          productBrand: "",
+          productCategory: "",
+          productSize: "",
+          productQuantity: "",
+          selectedImages: [],
+        });
+      }
 
       console.log("Product Added Successfully");
     } catch (error) {
@@ -188,7 +235,7 @@ export default function AddProduct({ products }) {
                         productName: e.target.value,
                       }))
                     }
-
+                    required
                   />
                   <TextField
                     id="outlined-basic"
@@ -202,7 +249,9 @@ export default function AddProduct({ products }) {
                         productPrice: e.target.value,
                       }))
                     }
+                    required
                   />
+
                 </div>
 
                 <TextField
@@ -217,6 +266,7 @@ export default function AddProduct({ products }) {
                       productDescription: e.target.value,
                     }))
                   }
+                  required
                 />
 
                 <div className="flex flex-row gap-[1vh] my-[2vh]">
@@ -232,6 +282,7 @@ export default function AddProduct({ products }) {
                         productBrand: e.target.value,
                       }))
                     }
+                    required
                   />
                   <TextField
                     id="outlined-basic"
@@ -245,6 +296,7 @@ export default function AddProduct({ products }) {
                         productCategory: e.target.value,
                       }))
                     }
+                    required
                   />
                 </div>
 
@@ -261,6 +313,7 @@ export default function AddProduct({ products }) {
                         productSize: e.target.value,
                       }))
                     }
+                    required
                   />
                   <TextField
                     id="outlined-basic"
@@ -274,6 +327,7 @@ export default function AddProduct({ products }) {
                         productQuantity: e.target.value,
                       }))
                     }
+                    required
                   />
                 </div>
 
