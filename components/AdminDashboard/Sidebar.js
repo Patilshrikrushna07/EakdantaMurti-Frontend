@@ -21,47 +21,40 @@ const Sidebar = ({products}) => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className="bg-gray-800 h-screen w-64  top-0 left-0 overflow-y-auto">
+      <div className="bg-gray-800 h-screen w-[18vw] pt-[5vh]   top-0 left-0 overflow-y-auto">
         <div className="p-4">
-          <h2 className="text-white text-lg font-semibold text-center">Admin Panel</h2>
+          
+          <h2 className="text-white  font-semibold text-center md:text-[4vh]">Admin Panel</h2>
         </div>
         <nav className="text-white">
-          <ul className="py-4">
-            <li className="px-4 py-2">
+          <ul className="py-4 flex flex-col space-y-6 md:text-[2.5vh]">
+            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105    hover:bg-white hover:text-gray-800">
               <div onClick={() => handleComponentChange(<Dashboard />)} className="cursor-pointer">
                 <DashboardIcon className="mr-2" />
-                Dashboard
+                <span className='md:inline hidden' >Dashboard</span>
               </div>
             </li>
-            <li className="px-4 py-2">
+            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <div onClick={() => handleComponentChange(<Order />)} className="cursor-pointer">
               <ShoppingCartIcon className="mr-2" />
                 Order
               </div>
             </li>
-            <li className="px-4 py-2">
+            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
             <div onClick={() => handleComponentChange(<AddProduct products={products}/>)} className="cursor-pointer">
             <StorefrontIcon className="mr-2" />
                 Add Product
               </div>
             </li>
-            <li className="px-4 py-2">
+            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <Link href="/customers">
                 <span className="flex items-center">
                   <PeopleIcon className="mr-2" />
-                  Customers
+                  User
                 </span>
               </Link>
             </li>
-            <li className="px-4 py-2">
-              <Link href="/reports">
-                <span className="flex items-center">
-                  <AssessmentIcon className="mr-2" />
-                  Reports
-                </span>
-              </Link>
-            </li>
-            <li className="px-4 py-2">
+            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <Link href="/settings">
                 <span className="flex items-center">
                   <SettingsIcon className="mr-2" />
@@ -69,7 +62,7 @@ const Sidebar = ({products}) => {
                 </span>
               </Link>
             </li>
-            <li className="px-4 py-2">
+            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <Link href="/logout">
                 <span className="flex items-center">
                   <LogoutIcon className="mr-2" />
@@ -82,7 +75,7 @@ const Sidebar = ({products}) => {
       </div>
 
       {/* Active Component */}
-      <div className="ml-2 p-8">
+      <div className="ml-2 p-8 w-[90vw] h-[100vh] overflow-y-scroll">
         {activeComponent}
       </div>
      
