@@ -1,6 +1,6 @@
 import React from "react";
 import HeroBanner from "../components/HomeSection/HeroBanner";
-import Homesale from "../components/HomeSection/Homesale";
+import HomeSaleAd from "../components/HomeSection/HomeSaleAd";
 import { ProductCard } from "../components";
 import Link from "next/link";
 import Inspirations from "../components/HomeSection/Inspirations";
@@ -13,7 +13,7 @@ export default function Home({ products }) {
   return (
     <div>
       <HeroBanner />
-      <Homesale />
+      <HomeSaleAd />
       <div>
         <h1 className="text-center font-poppins font-bold md:text-[6vh] my-[3vh] text-[3vh]">
           Our Murtis
