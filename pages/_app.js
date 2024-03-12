@@ -4,10 +4,12 @@ import { Layout } from "../components";
 import { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { StateContext } from '../context/StateContext';
-
+import Script from "next/script";
 
 export default function App({ Component, pageProps }) {
   return (
+    <>
+    <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
     <StateContext>
       <Layout>
         <Component {...pageProps} />
@@ -44,5 +46,6 @@ export default function App({ Component, pageProps }) {
         />
       </Layout>
     </StateContext>
+    </>
   );
 }

@@ -33,6 +33,78 @@ export default function checkout() {
     },
   ];
 
+    const amount = 500;
+    const currency = "INR";
+    const receiptId = "qwsaq1";
+  
+    const paymentHandler = async (e) => {
+      const response = await fetch("http://localhost:5000/api/rezopay-order", {
+        method: "POST",
+        body: JSON.stringify({
+          amount,
+          currency,
+          receipt: receiptId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const order = await response.json();
+      console.log(order);
+  
+      var options = {
+        key: "rzp_test_RYdosVrig791R5", 
+        amount,
+        currency,
+        name: "Acme Corp", 
+        description: "Test Transaction",
+        image: "https://example.com/your_logo",
+        order_id: order.id, 
+        handler: async function (response) {
+          const body = {
+            ...response,
+          };
+  
+          const validateRes = await fetch(
+            "http://localhost:5000/api/rezopay-order/validate",
+            {
+              method: "POST",
+              body: JSON.stringify(body),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const jsonRes = await validateRes.json();
+          console.log(jsonRes);
+        },
+        prefill: {
+          //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+          name: "Web Dev Matrix", //your customer's name
+          email: "webdevmatrix@example.com",
+          contact: "9000000000", //Provide the customer's phone number for better conversion rates
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      var rzp1 = new window.Razorpay(options);
+      rzp1.on("payment.failed", function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+      rzp1.open();
+      e.preventDefault();
+    };
+
   const router = useRouter();
 
   const handleStepChange = (index) => {
@@ -136,7 +208,7 @@ export default function checkout() {
               Back
             </button>
             <button
-              onClick={handlePayNow}
+              onClick={paymentHandler}
               className="bg-[#B88E2F] text-white px-4 py-2 rounded-md mr-4"
             >
               Pay Now!
