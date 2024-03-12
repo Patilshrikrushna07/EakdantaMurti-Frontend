@@ -1,109 +1,27 @@
 import React, { useState } from "react";
 import Cart from "@/components/CheckoutComponents/Cart";
-import OrderDetail  from "@/components/CheckoutComponents/OrderDetail";
+import OrderDetail from "@/components/CheckoutComponents/OrderDetail";
 import { OrderStatus } from "@/components/CheckoutComponents/OrderStatus";
 import { useRouter } from "next/router";
 import { useStateContext } from "../context/StateContext";
 import { toast } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-
-// export default function checkout(){
-//   return(
-//     <div>
-//       <Cart/>
-//       <OrderDetail/>
-//     </div>
-//   )
-// }
+import Payment from "../components/CheckoutComponents/Payment";
 
 export default function checkout() {
   const { cartItems } = useStateContext();
-
   const [activeStep, setActiveStep] = useState(0);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
-  const [paymentFailed, setPaymentFailed] = useState(false);
 
   const steps = [
     { label: "Shopping Cart", component: <Cart /> },
-    { label: "Order Detail", component: < OrderDetail /> },
+    { label: "Order Detail", component: <OrderDetail /> },
     {
-      label: "Order Status",
-      component: <OrderStatus orderConfirmed={!paymentFailed} />,
+      label: "Order Status", 
+      // component:<OrderStatus/>
     },
   ];
-
-    const amount = 500;
-    const currency = "INR";
-    const receiptId = "qwsaq1";
-  
-    const paymentHandler = async (e) => {
-      const response = await fetch("http://localhost:5000/api/rezopay-order", {
-        method: "POST",
-        body: JSON.stringify({
-          amount,
-          currency,
-          receipt: receiptId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const order = await response.json();
-      console.log(order);
-  
-      var options = {
-        key: "rzp_test_RYdosVrig791R5", 
-        amount,
-        currency,
-        name: "Acme Corp", 
-        description: "Test Transaction",
-        image: "https://example.com/your_logo",
-        order_id: order.id, 
-        handler: async function (response) {
-          const body = {
-            ...response,
-          };
-  
-          const validateRes = await fetch(
-            "http://localhost:5000/api/rezopay-order/validate",
-            {
-              method: "POST",
-              body: JSON.stringify(body),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const jsonRes = await validateRes.json();
-          console.log(jsonRes);
-        },
-        prefill: {
-          //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-          name: "Web Dev Matrix", //your customer's name
-          email: "webdevmatrix@example.com",
-          contact: "9000000000", //Provide the customer's phone number for better conversion rates
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-      var rzp1 = new window.Razorpay(options);
-      rzp1.on("payment.failed", function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-      });
-      rzp1.open();
-      e.preventDefault();
-    };
 
   const router = useRouter();
 
@@ -119,21 +37,14 @@ export default function checkout() {
 
   const handlePayNow = () => {
     if (activeStep === 1 && cartItems.length > 0) {
-      setPaymentCompleted(true); // Simulating successful payment completion
-      setActiveStep(2); // Set the active step to Order Status
+      setPaymentCompleted(true); 
+      setActiveStep(2); 
     } else {
       setPaymentFailed(true);
       toast.error("Your cart is empty or payment could not be processed.");
-      setActiveStep(2); // Set the active step to Order Status even on payment failure
+      setActiveStep(2); 
     }
   };
-
-  const handleFailPayment = () => {
-    setPaymentFailed(true);
-    setActiveStep(2);
-  };
-
- 
 
   return (
     <div className="w-[90%] mx-auto my-[10vh]">
@@ -145,30 +56,30 @@ export default function checkout() {
             )}
             <div className="flex flex-row items-center px-[2vh] bg-white">
               <p
-                className={`text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${activeStep > index || (paymentCompleted && index === 2)
+                className={`text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${
+                  activeStep > index || (paymentCompleted && index === 2)
                     ? "bg-green-700 text-white"
-                    : paymentFailed && index === 2
-                      ? "bg-red-500 text-white"
-                      : "bg-[#B88E2F] text-white"
-                  } w-[5vh] h-[5vh] mr-[1.5vh]`}
+                    : "bg-[#B88E2F] text-white"
+                } w-[5vh] h-[5vh] mr-[1.5vh]`}
               >
-                {(activeStep > index || (paymentCompleted && index === 2)) &&
-                  !paymentFailed ? (
-                  <span>&#10003;</span>
-                ) : paymentFailed && index === 2 ? (
+                {activeStep > index || (index === activeStep && paymentCompleted) ? (
                   <span className="flex flex-row justify-center items-center">
-                    <FontAwesomeIcon className="text-white text-[3vh]" icon="fa-solid fa-xmark" />
+                    {/* <FontAwesomeIcon
+                      className="text-white text-[3vh]"
+                      icon="fa-solid fa-square-check"
+                    /> */}
+                    &#10003;
                   </span>
-                  // 
                 ) : (
                   index + 1
                 )}
               </p>
               <h2
-                className={`text-[2.8vh] font-medium ${activeStep > index || (paymentCompleted && index === 2)
+                className={`text-[2.8vh] font-medium ${
+                  activeStep > index || (paymentCompleted && index === 2)
                     ? "text-green-700"
                     : "bg-white"
-                  }`}
+                }`}
               >
                 {step.label}
               </h2>
@@ -199,7 +110,7 @@ export default function checkout() {
           </>
         )}
         {activeStep === 1 && (
-          <div>
+          <div className="flex flex-row gap-x-[1vh]">
             <button
               onClick={() => handleStepChange(activeStep - 1)}
               disabled={activeStep === 0}
@@ -207,19 +118,7 @@ export default function checkout() {
             >
               Back
             </button>
-            <button
-              onClick={paymentHandler}
-              className="bg-[#B88E2F] text-white px-4 py-2 rounded-md mr-4"
-            >
-              Pay Now!
-            </button>
-            <Link href="/">
-            <button
-              className="bg-[#B88E2F] text-white px-4 py-2 rounded-md"
-            >
-              Cancel
-            </button>
-            </Link>
+            <Payment />
           </div>
         )}
       </div>

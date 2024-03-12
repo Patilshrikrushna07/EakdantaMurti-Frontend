@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useStateContext } from "../../context/StateContext";
-import Payment from "./Payment";
-
 
 export default function OrderDetail() {
   const { totalPrice } = useStateContext();
@@ -105,7 +103,6 @@ export default function OrderDetail() {
         Total Price: Rs.{totalPrice}
       </p>
 
-      <Payment/>
     </div>
   );
 }
