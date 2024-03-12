@@ -1,5 +1,6 @@
 import React from "react";
 import { useStateContext } from "../../context/StateContext";
+import Link from "next/link";
 
 export default function Cart() {
   const { cartItems, totalPrice, incQty, decQty, clearCart, removeProduct } =
@@ -7,13 +8,16 @@ export default function Cart() {
 
   return (
     <div className="w-[90vw]">
-      <h1 className="text-[4vh] font-semibold my-[4vh] text-center">My Cart</h1>
-      <button
+      {/* <h1 className="text-[4vh] font-semibold my-[4vh] text-center">My Cart</h1> */}
+      {cartItems.length > 0 && (
+        <button
         onClick={clearCart}
         className="text-[2vh] mb-4 bg-red-500 text-white px-3 py-1 rounded"
-      >
-        Clear Cart
-      </button>
+        >
+          Clear Cart
+        </button>
+      )}
+      
       {cartItems.length > 0 ? (
         <div className="w-[100%]">
           {cartItems.map((product) => (
@@ -60,7 +64,15 @@ export default function Cart() {
           </p>
         </div>
       ) : (
-        <p>Your cart is empty!</p>
+        <div className="h-[60vh] my-[20vh]">
+          <p className="text-[5vh] text-center my-[2vh]">Your cart is empty!</p>
+          <Link href="/shop">
+          <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-125 hover:bg-[#B88E2F] hover:text-white transition-all mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[15vw]">
+            Continue Shopping
+          </p>
+        </Link>
+        </div>
+        
       )}
     </div>
   );
