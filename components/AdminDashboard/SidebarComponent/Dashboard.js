@@ -11,61 +11,61 @@ export const Dashboard = () => {
   ];
   return (
     <div className="container mx-auto mt-[2vh] ">
-      <h1 className="text-2xl font-bold mb-4">Welcome Back, Reena!</h1>
-      <p className="text-gray-600">
+      <h1 className="text-[3vh] font-bold mb-[2vh]">Welcome Back, Reena!</h1>
+      <p className="text-gray-600 my-[2vh] text-[2.8vh]">
         Here's what's happening with your store today.
       </p>
 
-      <div className="flex flex-row space-x-7 my-[3vh]">
-        <div className="bg-[#fee6e6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
-          <h1 className=" text-[2.5vh] ">Ecommerce Revenue</h1>
-          <p className="font-semibold text-[4vh]">Rs. 15,58,123</p>
+      <div className="flex flex-row flex-wrap gap-[3vh]">
+        <div className="w-[35vh] flex flex-col justify-center h-[30vh] bg-[#fee6e6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+          <h1 className="text-[3vh] ">Ecommerce Revenue</h1>
+          <p className="font-semibold text-[5vh]">Rs. 15,58,123</p>
           <div>
-            <p className="bg-[#fff] text-red-600 rounded-xl font-semibold mt-[2vh] w-[11vw] text-center px-[1vh]">
+            <p className="bg-[#fff] text-[2.8vh] py-[1vh] text-red-600 rounded-xl font-semibold mt-[2vh] w-[100%] text-center px-[1vh]">
               -4.9 %
             </p>
           </div>
         </div>
-        <div className="bg-[#e6fee8db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
-          <h1 className=" text-[2.5vh] ">New Customers</h1>
-          <p className="font-semibold text-[4vh]">58,123</p>
+        <div className="w-[35vh] h-[30vh] flex flex-col justify-center bg-[#e6fee8db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+          <h1 className=" text-[3vh] ">New Customers</h1>
+          <p className="font-semibold text-[5vh]">58,123</p>
           <div>
-            <p className="bg-[#fff] text-green-600 rounded-xl font-semibold mt-[2vh] w-[11vw] text-center px-[1vh]">
+            <p className="bg-[#fff] text-[2.8vh] text-green-600 py-[1vh] rounded-xl font-semibold mt-[2vh] w-[100%] mx-auto text-center px-[1vh]">
               +14.9 %
             </p>
           </div>
         </div>
-        <div className="bg-[#e6fcfedb] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
-          <h1 className=" text-[2.5vh] ">Total Order</h1>
-          <p className="font-semibold text-[4vh]">123</p>
+        <div className="w-[35vh] h-[30vh] flex flex-col justify-center bg-[#e6fcfedb] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+          <h1 className=" text-[3vh] ">Total Order</h1>
+          <p className="font-semibold text-[5vh]">123</p>
           <div>
-            <p className="bg-[#fff] text-green-600 rounded-xl font-semibold mt-[2vh] w-[11vw] text-center px-[1vh]">
+            <p className="bg-[#fff] text-[2.8vh] text-green-600 py-[1vh] rounded-xl font-semibold mt-[2vh] w-[100%] text-center px-[1vh]">
               +14.9 %
             </p>
           </div>
         </div>
-        <div className="bg-[#e6e8fedb] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
-          <h1 className=" text-[2.5vh] ">Visitors</h1>
-          <p className="font-semibold text-[4vh]">1,538</p>
+        <div className="w-[35vh] h-[30vh] flex flex-col justify-center  bg-[#e6e8fedb] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+          <h1 className=" text-[3vh] ">Visitors</h1>
+          <p className="font-semibold text-[5vh]">1,538</p>
           <div>
-            <p className="bg-[#fff] text-green-600 rounded-xl font-semibold mt-[2vh] w-[11vw] text-center px-[1vh]">
+            <p className="bg-[#fff] text-[2.8vh] text-green-600 py-[1vh] rounded-xl font-semibold mt-[2vh] w-[100%] text-center px-[1vh]">
               +14.9 %
             </p>
           </div>
         </div>
-        <div className="bg-[#feebe6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+        {/* <div className="w-[35vh] h-[30vh] bg-[#feebe6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
           <h1 className=" text-[2.5vh] ">Average Order Value</h1>
           <p className="font-semibold text-[4vh]">1,538</p>
           <div>
-            <p className="bg-[#fff] text-green-600 rounded-xl font-semibold mt-[2vh] w-[11vw] text-center px-[1vh]">
+            <p className="bg-[#fff] text-green-600 rounded-xl font-semibold mt-[2vh] w-[100%] text-center px-[1vh]">
               +14.9 %
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="mx-auto">
+      {/* <div className="mx-auto">
         <img src="/adminchart.jpg" alt="adminchart" />
-      </div>
+      </div> */}
       <div className="m-[5vh]">
         <div className="flex flex-row justify-between ">
           <h1 className="text-2xl font-semibold">Recent Orders</h1>
