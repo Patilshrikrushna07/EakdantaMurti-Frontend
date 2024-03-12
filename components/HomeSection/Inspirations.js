@@ -11,7 +11,7 @@ const Inspirations = () => {
   ];
 
   return (
-    <div className="bg-[#FCF8F3] flex flex-col md:flex-row justify-between items-center my-[5vh] md:my-[15vh]">
+    <div className="bg-[#FCF8F3] overflow-hidden flex flex-col md:flex-row justify-between items-center my-[5vh] md:my-[15vh]">
       <div className="text-left p-8 md:p-4 md:w-[60vw] md:ml-[20vh]">
         <h1 className="font-poppins font-bold text-3xl  md:text-6xl">
           50+ Beautiful Idols & Statues

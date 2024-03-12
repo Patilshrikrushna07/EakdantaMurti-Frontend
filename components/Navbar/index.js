@@ -52,7 +52,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="list-none flex flex-row gap-x-[2vh] md:gap-x-[4vh]">
+          <Link href='/myaccount'>
           <Person2Icon className="cursor-pointer text-amber-800 text-[4.5vh]" />
+          </Link>
           <SearchIcon className="cursor-pointer text-amber-800 text-[4.5vh]" />
           {/* <FavoriteIcon className="cursor-pointer text-red-500 text-[4.5vh]" /> */}
           <Link href="/checkout">
@@ -66,39 +68,34 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`navlinks-mobile md:hidden fixed z-50 h-[100vh] w-[80%] top-0 bg-amber-100 flex flex-col justify-center items-center transition-transform duration-500 ease-in-out  ${
+          className={`navlinks-mobile md:hidden fixed z-50 h-[100vh] w-[80%] top-0  bg-amber-100 flex flex-col items-center transition-transform duration-500 ease-in-out  ${
             mobileNavOpen ? "-translate-x-[5vh]" : "-translate-x-[100vw]"
           }`}
         >
           <div
             onClick={toggleMobileNav}
-            className="absolute cursor-pointer top-0 right-0 p-[4vh]"
+            className=" cursor-pointer ml-[22vh] p-[4vh]"
           >
             <CloseIcon
               className="text-[5vh] text-amber"
             />
           </div>
-          <ul className="flex flex-col justify-center text-gray-700 items-center gap-x-[3vh]">
+          <ul className="flex flex-col  text-gray-700  gap-x-[3vh]">
             <Link href="/" onClick={toggleMobileNav}>
               <li className="text-[3vh] my-[2vh] font-medium focus:underline">
                 Home
               </li>
             </Link>
-            <Link href="/aboutus" onClick={toggleMobileNav}>
+            <Link href="/about" onClick={toggleMobileNav}>
               <li className="text-[3vh] my-[2vh] font-medium">About</li>
             </Link>
-            <Link href="/men" onClick={toggleMobileNav}>
-              <li className="text-[3vh] my-[2vh] font-medium">Men</li>
-            </Link>
-            <Link href="/women" onClick={toggleMobileNav}>
-              <li className="text-[3vh] my-[2vh] font-medium">Women</li>
-            </Link>
-            <Link href="/kids" onClick={toggleMobileNav}>
-              <li className="text-[3vh] my-[2vh] font-medium">Kids</li>
+            <Link href="/shop" onClick={toggleMobileNav}>
+              <li className="text-[3vh] my-[2vh] font-medium">Shop</li>
             </Link>
             <Link href="/contact" onClick={toggleMobileNav}>
               <li className="text-[3vh] my-[2vh] font-medium">Contact</li>
             </Link>
+           
           </ul>
         </div>
       </div>

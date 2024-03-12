@@ -54,9 +54,9 @@ export default function checkout() {
             {index !== 0 && (
               <div className="h-[0.2vh] bg-gray-500 left-[15%] w-[69%] mx-auto absolute -z-50"></div>
             )}
-            <div className="flex flex-row items-center px-[2vh] bg-white">
+            <div className="flex flex-col md:flex-row items-center px-[2vh] bg-white space-y-2">
               <p
-                className={`text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${
+                className={`md:text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${
                   activeStep > index || (paymentCompleted && index === 2)
                     ? "bg-green-700 text-white"
                     : "bg-[#B88E2F] text-white"
@@ -75,7 +75,7 @@ export default function checkout() {
                 )}
               </p>
               <h2
-                className={`text-[2.8vh] font-medium ${
+                className={`md:text-[2.8vh] text-center mx-auto font-medium ${
                   activeStep > index || (paymentCompleted && index === 2)
                     ? "text-green-700"
                     : "bg-white"
