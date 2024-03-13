@@ -134,22 +134,13 @@ export default function AddProduct({ products }) {
         formDataToUpload.append("images", imageUrl)
       );
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const response = await fetch(`${apiUrl}/create-product`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataToUpload),
-      });
-
+      
       if (!response.ok) {
         throw new Error("Failed to upload Product");
       }
 
       if (response.ok) {
         closeModal();
-        // console.log("FormData after upload:", formData);
         toast.success("Product Added Successfully");
         setFormData({
           name: "",
@@ -161,15 +152,16 @@ export default function AddProduct({ products }) {
           stock_quantity: "",
           images: [],
         });
-      }
+        console.log("Product Added Successfully", formData);
+        console.log("Product Added Successfully", formDataToUpload);
 
-      console.log("Product Added Successfully", formData);
+      }
+      
     } catch (error) {
       console.error("Error uploading product:", error);
     }
   };
-
-  // console.log("Products fetch successfully", products);
+  
   const productsArray = products ? products.data : [];
 
   return (
@@ -231,7 +223,7 @@ export default function AddProduct({ products }) {
             >
               <CloseIcon className="text-[5vh]" />
             </h1>
-            <div>
+            <form onSubmit={uploadProduct}>
               <div>
                 <div className="relative">
                   <label
@@ -348,13 +340,15 @@ export default function AddProduct({ products }) {
                 </div>
 
                 <button
-                  onClick={uploadProduct}
+                  // onClick={uploadProduct}
+                  type="submit"
                   className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600"
                 >
                   Save Changes
                 </button>
               </div>
-            </div>
+            </form>
+
           </div>
         </div>
       )}
