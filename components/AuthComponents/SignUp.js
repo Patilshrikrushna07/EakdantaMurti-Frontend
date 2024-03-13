@@ -79,6 +79,7 @@ const SignUp = () => {
       const data = await response.json();
 
       if (response.ok) {
+        console.log("User registered successfully!",formData)
         toast.success("User registered successfully!");
         setFormData({
           first_name: "",
