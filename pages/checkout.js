@@ -18,8 +18,8 @@ export default function checkout() {
     { label: "Shopping Cart", component: <Cart /> },
     { label: "Order Detail", component: <OrderDetail /> },
     {
-      label: "Order Status", 
-      // component:<OrderStatus/>
+      label: "Order Status",
+      component: <OrderStatus />,
     },
   ];
 
@@ -37,14 +37,19 @@ export default function checkout() {
 
   const handlePayNow = () => {
     if (activeStep === 1 && cartItems.length > 0) {
-      setPaymentCompleted(true); 
-      setActiveStep(2); 
+      setPaymentCompleted(true);
+      setActiveStep(2);
     } else {
       setPaymentFailed(true);
       toast.error("Your cart is empty or payment could not be processed.");
-      setActiveStep(2); 
+      setActiveStep(2);
     }
   };
+
+  const handlePaymentCompletion =()=>{
+    setPaymentCompleted(true);
+    setActiveStep(2)
+  }
 
   return (
     <div className="w-[90%] mx-auto my-[10vh]">
@@ -62,7 +67,8 @@ export default function checkout() {
                     : "bg-[#B88E2F] text-white z-20"
                 } w-[5vh] h-[5vh] mr-[1.5vh]`}
               >
-                {activeStep > index || (index === activeStep && paymentCompleted) ? (
+                {activeStep > index ||
+                (index === activeStep && paymentCompleted) ? (
                   <span className="flex flex-row justify-center items-center">
                     {/* <FontAwesomeIcon
                       className="text-white text-[3vh]"
@@ -118,7 +124,7 @@ export default function checkout() {
             >
               Back
             </button>
-            <Payment />
+            <Payment onPaymentComplete={handlePaymentCompletion}/>
           </div>
         )}
       </div>
