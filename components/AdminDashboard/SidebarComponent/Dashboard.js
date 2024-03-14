@@ -40,9 +40,15 @@ export const Dashboard = () => {
       </p>
 
       <div className="flex flex-row flex-wrap gap-[3vh]">
+<<<<<<< HEAD
+        <div className=" flex flex-col justify-center h-[30vh] bg-[#fee6e6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+          <h1 className="text-[3vh] ">Ecommerce Revenue</h1>
+          <p className="font-semibold text-[5vh]">Rs. 15,58,123</p>
+=======
         <div className="w-[35vh] flex flex-col justify-center h-[30vh] bg-[#fee6e6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
           <h1 className="text-[2.6vh] ">Ecommerce Revenue</h1>
           <p className="font-semibold text-[4.5vh]">Rs. 15,58,123</p>
+>>>>>>> 99ef3b5434be007e9a08a9f902d0b196a414c373
           <div>
             <p className="bg-[#fff] text-[2.8vh] py-[1vh] text-red-600 rounded-xl font-semibold mt-[2vh] w-[100%] text-center px-[1vh]">
               -4.9 %
