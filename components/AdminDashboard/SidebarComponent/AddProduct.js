@@ -11,13 +11,13 @@ export default function AddProduct({ products }) {
 
   const [formData, setFormData] = useState({
     name: "",
-    price: "",
-    description: "",
-    brand: "",
-    category: "",
     size: "",
-    stock_quantity: "",
     images: [],
+    description: "",
+    price: "",
+    category: "",
+    brand: "",
+    stock_quantity: ""
   });
 
   const openModal = () => {
@@ -121,6 +121,7 @@ export default function AddProduct({ products }) {
         return;
       }
 
+
       const formDataToUpload = new FormData();
       formDataToUpload.append("name", formData.name);
       formDataToUpload.append("price", formData.price);
@@ -134,6 +135,15 @@ export default function AddProduct({ products }) {
         formDataToUpload.append("images", imageUrl)
       );
 
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const response = await fetch(`${apiUrl}/create-product`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
       
       if (!response.ok) {
         throw new Error("Failed to upload Product");
@@ -144,16 +154,16 @@ export default function AddProduct({ products }) {
         toast.success("Product Added Successfully");
         setFormData({
           name: "",
-          price: "",
-          description: "",
-          brand: "",
-          category: "",
           size: "",
-          stock_quantity: "",
           images: [],
+          description: "",
+          price: "",
+          category: "",
+          brand: "",
+          stock_quantity: ""
         });
         console.log("Product Added Successfully", formData);
-        console.log("Product Added Successfully", formDataToUpload);
+        // console.log("Product Added Successfully", formDataToUpload);
 
       }
       
@@ -163,6 +173,57 @@ export default function AddProduct({ products }) {
   };
   
   const productsArray = products ? products.data : [];
+
+  const sampleUploadProduct = async () => {
+    try {
+      const sampleProduct = {
+        name: "Sample Product",
+        price: 99.99,
+        description: "This is a sample product description.",
+        brand: "Sample Brand",
+        category: "Sample Category",
+        size: "Large",
+        stock_quantity: 50,
+        images: [
+          "https://via.placeholder.com/150",
+          "https://via.placeholder.com/150",
+          "https://via.placeholder.com/150"
+        ]
+      };
+
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const response = await fetch(`${apiUrl}/create-product`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sampleProduct)
+      });
+  
+      // Check if request was successful
+      if (!response.ok) {
+        throw new Error("Failed to upload Product");
+      }
+  
+      // Handle successful response
+      closeModal();
+      toast.success("Product Added Successfully");
+      setFormData({
+        name: "",
+        size: "",
+        images: [],
+        description: "",
+        price: "",
+        category: "",
+        brand: "",
+        stock_quantity: ""
+      });
+      console.log("Product Added Successfully", sampleProduct);
+    } catch (error) {
+      console.error("Error uploading product:", error);
+    }
+
+  }
 
   return (
     <div className=" relative mx-auto my-[5vh]">
@@ -175,6 +236,12 @@ export default function AddProduct({ products }) {
         className="text-[2.7vh] active:bg-blue-800 px-[2vh] py-[1vh] text-white font-medium absolute top-0 right-0 bg-blue-600"
       >
         Add Product
+      </button>
+
+      <button
+        onClick={sampleUploadProduct}
+      >
+        Upload Sample Data
       </button>
 
       <div className="my-[5vh]">
@@ -223,7 +290,7 @@ export default function AddProduct({ products }) {
             >
               <CloseIcon className="text-[5vh]" />
             </h1>
-            <form onSubmit={uploadProduct}>
+            <div>
               <div>
                 <div className="relative">
                   <label
@@ -340,14 +407,14 @@ export default function AddProduct({ products }) {
                 </div>
 
                 <button
-                  // onClick={uploadProduct}
-                  type="submit"
+                  onClick={uploadProduct}
+                  // type="submit"
                   className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600"
                 >
                   Save Changes
                 </button>
               </div>
-            </form>
+            </div>
 
           </div>
         </div>
