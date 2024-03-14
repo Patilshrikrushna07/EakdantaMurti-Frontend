@@ -13,7 +13,7 @@ export default function ProductDetails({ product }) {
     return <div>Loading...</div>;
   }
 
-  const { name, images, description, price } = product.data;
+  const { name, images, description, price,size } = product.data;
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
   const handleImageClick = (image) => {
@@ -58,8 +58,8 @@ export default function ProductDetails({ product }) {
           {images.map((image, index) => (
             <img
               key={index}
-              className={`md:h-[20vh] md:w-[20vh] w-[10vh] object-cover ${
-                index !== 0 ? "m-[2vh]" : ""
+              className={`md:h-[20vh] md:w-[25vh] w-[10vh] object-cover ${
+                index !== 0 ? "ml-[2vh] my-[2vh] md:ml-[0vh]" : ""
               }`}
               src={image}
               alt={name}
@@ -91,7 +91,7 @@ export default function ProductDetails({ product }) {
           </div>
           {selectedImage && (
             <img
-              className="md:w-[70vw] h-[70vh] object-cover object-top"
+              className="md:w-[70vw] md:h-[70vh] object-cover object-top"
               src={selectedImage}
               alt={name}
             />
@@ -118,23 +118,11 @@ export default function ProductDetails({ product }) {
             Size
           </h1>
           <div className="flex flex-row space-x-4 my-[1vh]">
-            {/* <button onClick={() => setSelectedSize("12 inch")} className={`bg-[#F9F1E7] p-[2vh] ${selectedSize ? "border-2 border-black" : ""}`}>12 inch</button> */}
-            <p className="bg-[#F9F1E7] p-[2vh] ">12 inch</p>
-            <p className="bg-[#F9F1E7] p-[2vh]">8 inch</p>
-            <p className="bg-[#F9F1E7] p-[2vh] ">6 inch</p>
+            <button onClick={() => setSelectedSize("size")} className={`bg-[#F9F1E7] p-[2vh] ${selectedSize ? "border-2 border-black" : ""}`}>{size}</button>
           </div>
          
         </div>
-        {/* <div>
-          <h1 className=" text-[2.5vh] text-[#878787] font-semibold font-poppins">
-            Color
-          </h1>
-          <div className="flex flex-row space-x-4 my-[1vh]">
-            <span className="bg-[#BEBBCD] p-[2vh] rounded-full"></span>
-            <span className="bg-[#242323] p-[2vh] rounded-full"></span>
-            <span className="bg-[#B88E2F] p-[2vh] rounded-full "> </span>
-          </div>
-        </div> */}
+      
         <div className="flex flex-row space-x-5">
           <button  onClick={addToCart} className="md:px-[4.8vh] md:py-[1.2vh] px-[2vh] py-[1vh] shadow-sm md:text-[2.8vh] rounded-xl border-[0.3vh] border-[#2424248f] text-[#242424] hover:scale-105 ">
             Add To Cart

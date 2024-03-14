@@ -17,7 +17,7 @@ export const Dashboard = () => {
       </p>
 
       <div className="flex flex-row flex-wrap gap-[3vh]">
-        <div className="w-[35vh] flex flex-col justify-center h-[30vh] bg-[#fee6e6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
+        <div className=" flex flex-col justify-center h-[30vh] bg-[#fee6e6db] shadow-md px-[3vh] py-[2vh] rounded-2xl ">
           <h1 className="text-[3vh] ">Ecommerce Revenue</h1>
           <p className="font-semibold text-[5vh]">Rs. 15,58,123</p>
           <div>
