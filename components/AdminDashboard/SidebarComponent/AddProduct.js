@@ -2,28 +2,23 @@ import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-hot-toast";
-// import cloudinary from "cloudinary";
 
 export default function AddProduct({ products }) {
 
-  const cloudinaryCloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const cloudinaryApiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
-  const cloudinaryApiSecret = process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET;
-
-
   const [showModal, setShowModal] = useState(false);
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [images, setImages] = useState([]);
+  const [imageUploading, setImageUploading] = useState(false);
 
   const [formData, setFormData] = useState({
-    productName: "",
-    productPrice: "",
-    productDescription: "",
-    productBrand: "",
-    productCategory: "",
-    productSize: "",
-    productQuantity: "",
-    selectedImages: [],
-  })
+    name: "",
+    price: "",
+    description: "",
+    brand: "",
+    category: "",
+    size: "",
+    stock_quantity: "",
+    images: [],
+  });
 
   const openModal = () => {
     setShowModal(true);
@@ -33,98 +28,140 @@ export default function AddProduct({ products }) {
     setShowModal(false);
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleImageChange = async (event) => {
     const files = event.target.files;
-    const uploadedImages=[];
-
-    try {
-      // for(const file of files){
-      //   const result = await cloudinary.uploader.upload(file,{folder:"products"});
-      //   uploadedImages.push(result.secure_url);
-      // }
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        selectedImages: [...prevFormData.selectedImages, ...files],
-      }));
-    } catch (error) {
-      console.log("Error uploading images to Cloudinary:",error)
+    if (!files || files.length === 0) {
+      toast.error("No images selected!");
+      return;
     }
-    
+
+    const validFiles = Array.from(files).filter(
+      (file) =>
+        file.type === "image/png" ||
+        file.type === "image/jpg" ||
+        file.type === "image/jpeg"
+    );
+
+    if (validFiles.length === 0) {
+      toast.error("No valid images selected!");
+      return;
+    }
+
+    setImageUploading(true);
+
+    const uploadPromises = validFiles.map((file) => {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "ekdanta-murti"); 
+      data.append("cloud_name", "gaurav-1920");
+
+      return fetch("https://api.cloudinary.com/v1_1/gaurav-1920/image/upload", {
+        method: "POST",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            images: [...prevFormData.images, res.url],
+          }));
+          return res.url;
+        })
+
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+          toast.error("Failed to upload image!");
+          return null;
+        });
+    });
+
+    Promise.all(uploadPromises)
+      .then((uploadedUrls) => {
+        const successfulUploads = uploadedUrls.filter((url) => url !== null);
+        console.log("Successfully uploaded URLs:", successfulUploads);
+        setImageUploading(false);
+      })
+      .catch((error) => {
+        console.error("Error uploading images:", error);
+        toast.error("Failed to upload images!");
+        setImageUploading(false);
+      });
   };
 
   const removeImage = (indexToRemove) => {
-    setFormData((prevFormData)=>({
+    setFormData((prevFormData) => ({
       ...prevFormData,
-      selectedImages: prevFormData.selectedImages.filter(
+      images: prevFormData.images.filter(
         (_, index) => index !== indexToRemove
       ),
-    }))
-    
+    }));
   };
 
-  const uploadProduct=async()=>{
+  const uploadProduct = async () => {
     try {
-
-      if(
-        !formData.productName ||
-        !formData.productPrice ||
-        !formData.productDescription ||
-        !formData.productBrand ||
-        !formData.productCategory ||
-        !formData.productSize ||
-        !formData.productQuantity ||
-        formData.selectedImages.length === 0
-      ){
-        toast.error("Please fill all required fields")
+      if (
+        !formData.name ||
+        !formData.price ||
+        !formData.description ||
+        !formData.brand ||
+        !formData.category ||
+        !formData.size ||
+        !formData.stock_quantity ||
+        formData.images.length === 0
+      ) {
+        toast.error("Please fill all required fields");
         return;
       }
-      
 
       const formDataToUpload = new FormData();
-      formDataToUpload.append("name", formData.productName);
-      formDataToUpload.append("price", formData.productPrice);
-      formDataToUpload.append("description", formData.productDescription);
-      formDataToUpload.append("brand", formData.productBrand);
-      formDataToUpload.append("category", formData.productCategory);
-      formDataToUpload.append("size", formData.productSize);
-      formDataToUpload.append("stock_quantity", formData.productQuantity);
-      
-      formData.selectedImages.forEach((imageUrl) =>
+      formDataToUpload.append("name", formData.name);
+      formDataToUpload.append("price", formData.price);
+      formDataToUpload.append("description", formData.description);
+      formDataToUpload.append("brand", formData.brand);
+      formDataToUpload.append("category", formData.category);
+      formDataToUpload.append("size", formData.size);
+      formDataToUpload.append("stock_quantity", formData.stock_quantity);
+
+      formData.images.forEach((imageUrl) =>
         formDataToUpload.append("images", imageUrl)
       );
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const response = await fetch(`${apiUrl}/create-product`,{
-        method:"POST",
-        body:formDataToUpload
-      });
-
-      if(!response.ok){
-        throw new Error("Failed to upload Product")
+      
+      if (!response.ok) {
+        throw new Error("Failed to upload Product");
       }
 
-      if(response.ok){
+      if (response.ok) {
         closeModal();
         toast.success("Product Added Successfully");
         setFormData({
-          productName: "",
-          productPrice: "",
-          productDescription: "",
-          productBrand: "",
-          productCategory: "",
-          productSize: "",
-          productQuantity: "",
-          selectedImages: [],
+          name: "",
+          price: "",
+          description: "",
+          brand: "",
+          category: "",
+          size: "",
+          stock_quantity: "",
+          images: [],
         });
-      }
+        console.log("Product Added Successfully", formData);
+        console.log("Product Added Successfully", formDataToUpload);
 
-      console.log("Product Added Successfully");
+      }
+      
     } catch (error) {
       console.error("Error uploading product:", error);
     }
-  }
-
-  // console.log("Products fetch successfully", products);
+  };
+  
   const productsArray = products ? products.data : [];
 
   return (
@@ -148,7 +185,7 @@ export default function AddProduct({ products }) {
               alt=""
               className="w-[15vh] h-[15vh] object-cover"
             />
-            <div className="w-[70%]">
+            <div className="w-[60%]">
               <h1 className="text-[3vh] font-semibold text-[#2a2a2a]">
                 {product.name}
               </h1>
@@ -186,7 +223,7 @@ export default function AddProduct({ products }) {
             >
               <CloseIcon className="text-[5vh]" />
             </h1>
-            <div>
+            <form onSubmit={uploadProduct}>
               <div>
                 <div className="relative">
                   <label
@@ -206,10 +243,10 @@ export default function AddProduct({ products }) {
                 </div>
 
                 <div className=" flex flex-row gap-[1vh] my-[2vh] ">
-                  {formData.selectedImages.map((image, index) => (
+                  {formData.images.map((imageUrl, index) => (
                     <div key={index} className="relative inline-block mr-[1vh]">
                       <img
-                        src={URL.createObjectURL(image)}
+                        src={imageUrl}
                         alt={`Image ${index + 1}`}
                         className="w-[20vh] h-[20vh] object-cover mt-[1vh] overflow-x-scroll"
                       />
@@ -224,118 +261,94 @@ export default function AddProduct({ products }) {
               <div>
                 <div className="flex flex-row gap-[1vh]">
                   <TextField
-                    id="outlined-basic"
+                    id="outline-basic"
+                    name="name"
                     label="Enter Product Name"
                     variant="outlined"
                     className="w-full"
-                    value={formData.productName}
-                    onChange={(e) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        productName: e.target.value,
-                      }))
-                    }
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                   />
                   <TextField
-                    id="outlined-basic"
+                    id="outline-basic"
+                    name="price"
                     label="Enter Product Price"
                     variant="outlined"
                     className="w-full"
-                    value={formData.productPrice}
-                    onChange={(e) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        productPrice: e.target.value,
-                      }))
-                    }
+                    value={formData.price}
+                    onChange={handleChange}
                     required
                   />
-
                 </div>
 
                 <TextField
-                  id="outlined-basic"
+                  id="outline-basic"
+                  name="description"
                   label="Enter Product Description"
                   variant="outlined"
                   className="w-full mt-[2vh]"
-                  value={formData.productDescription}
-                  onChange={(e) =>
-                    setFormData((prevFormData) => ({
-                      ...prevFormData,
-                      productDescription: e.target.value,
-                    }))
-                  }
+                  value={formData.description}
+                  onChange={handleChange}
                   required
                 />
 
                 <div className="flex flex-row gap-[1vh] my-[2vh]">
                   <TextField
-                    id="outlined-basic"
+                    id="outline-basic"
+                    name="brand"
                     label="Enter Product Brand"
                     variant="outlined"
                     className="w-full"
-                    value={formData.productBrand}
-                    onChange={(e) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        productBrand: e.target.value,
-                      }))
-                    }
+                    value={formData.brand}
+                    onChange={handleChange}
                     required
                   />
                   <TextField
-                    id="outlined-basic"
+                    id="outline-basic"
+                    name="category"
                     label="Enter Product Category"
                     variant="outlined"
                     className="w-full"
-                    value={formData.productCategory}
-                    onChange={(e) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        productCategory: e.target.value,
-                      }))
-                    }
+                    value={formData.category}
+                    onChange={handleChange}
                     required
                   />
                 </div>
 
                 <div className="flex flex-row gap-[1vh] my-[2vh]">
                   <TextField
-                    id="outlined-basic"
+                    id="outline-basic"
+                    name="size"
                     label="Enter Product Size"
                     variant="outlined"
                     className="w-full"
-                    value={formData.productSize}
-                    onChange={(e) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        productSize: e.target.value,
-                      }))
-                    }
+                    value={formData.size}
+                    onChange={handleChange}
                     required
                   />
                   <TextField
-                    id="outlined-basic"
+                    id="outline-basic"
+                    name="stock_quantity"
                     label="Enter Product Quantity"
                     variant="outlined"
                     className="w-full"
-                    value={formData.productQuantity}
-                    onChange={(e) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        productQuantity: e.target.value,
-                      }))
-                    }
+                    value={formData.stock_quantity}
+                    onChange={handleChange}
                     required
                   />
                 </div>
 
-                <button onClick={uploadProduct} className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600">
+                <button
+                  // onClick={uploadProduct}
+                  type="submit"
+                  className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600"
+                >
                   Save Changes
                 </button>
               </div>
-            </div>
+            </form>
+
           </div>
         </div>
       )}

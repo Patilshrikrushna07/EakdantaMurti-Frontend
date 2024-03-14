@@ -24,7 +24,7 @@ export default function Home({ products }) {
           ))}
         </div>
         <Link href="/shop">
-          <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-105 mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[10vw]">
+          <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-125 transition-all hover:bg-[#B88E2F] hover:text-[#f5f4f4] mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[10vw]">
             Show More
           </p>
         </Link>
