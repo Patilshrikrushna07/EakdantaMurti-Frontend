@@ -26,15 +26,16 @@ const myaccount = () => {
   return (
     <div className="   w-[80vw] mx-auto overflow-hidden m-[10vh]">
       <div className="flex md:flex-row flex-col md:space-x-10 space-y-3">
+        
         <div className="relative md:w-[60vw]">
           <img src="/product1.png" alt="idol-image" className="" />
           <div className="md:w-[20vw] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:text-[5vh] shadow-2xl text-center bg-[#0000001b] shadow-black font-bold text-white ">
             My Account
           </div>
         </div>
+
         <form
           className="flex flex-col w-full mx-auto "
-          // onSubmit={handleSubmit}
           data-aos="fade-right"
         >
           <div className="flex flex-col w-full space-y-5  justify-between">

@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { useStateContext } from "../../context/StateContext";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Link from "next/link";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 
 export default function Cart() {
   const { cartItems, totalPrice, incQty, decQty, clearCart, removeProduct } =
@@ -11,6 +14,13 @@ export default function Cart() {
     const shippingCharges = 299;
     const total = totalPrice + shippingCharges;
     return total;
+  };
+
+  // checkbox
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   return (
@@ -76,7 +86,7 @@ export default function Cart() {
               </div>
             ))}
           </div>
-          <div className="md:w-[40vw] sticky bg-[#fcf0e8be] md:py-[5vh] shadow-md flex flex-col justify-center  space-y-4">
+          <div className="md:w-[40vw] sticky bg-[#fcf0e8be]  shadow-md flex flex-col justify-center  space-y-4">
             <h1 className="md:text-[3.2vh] text-[#652222] font-medium text-center">
               Cart Totals
             </h1>
@@ -86,14 +96,10 @@ export default function Cart() {
               <p className="text-lg my-[2vh] font-medium">
                 Total : Rs.{calculateTotal()}
               </p>
-              <p className="md:text-sm my-[2vh]  text-justify">
-              <input type="checkbox" id="agreeCheckbox" name="agreeCheckbox" className="mr-[1vh] w-[2vh] h-[2vh] font-medium"></input>
-                I agree to carefully review and adhere to the terms and
-                conditions of the e-commerce website for religious sculptures.
-                These cover payment, shipping, returns, and user obligations. I
-                understand the privacy policy's importance and will familiarize
-                myself with payment methods, refunds, and product descriptions.
-              </p>
+              <FormControlLabel
+                control={<Checkbox checked={checked} onChange={handleChange} />}
+                label="I agree to the terms and conditions"
+              />
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Dashboard } from './SidebarComponent/Dashboard';
 import { Order } from './SidebarComponent/Order';
-import AddProduct from './SidebarComponent/AddProduct';
+import AddProduct from './AddProduct';
 
 const Sidebar = ({products}) => {
   const [activeComponent, setActiveComponent] = useState(Dashboard); // State to hold the active component
