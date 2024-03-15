@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { Zoom } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const Inspirations = () => {
+
+  useEffect(() => {
+    AOS.init({});
+    // Add event listeners for updates
+    AOS.refresh();
+    // Clean up on component unmount
+    return () => {
+      AOS.refreshHard();
+    };
+  }, []);
+
   const images = [
     { id: 1, source: "/inspiration1.jpg" },
     { id: 2, source: "/inspiration2.jpg" },
@@ -12,7 +25,11 @@ const Inspirations = () => {
 
   return (
     <div className="bg-[#FCF8F3] overflow-hidden flex flex-col md:flex-row justify-between items-center my-[5vh] md:my-[15vh]">
-      <div className="text-left p-8 md:p-4 md:w-[60vw] md:ml-[20vh]">
+      <div 
+        className="text-left p-8 md:p-4 md:w-[60vw] md:ml-[20vh]"
+        data-aos="fade-left"
+        data-aos-duration="700"
+      >
         <h1 className="font-poppins font-bold text-3xl  md:text-6xl">
           50+ Beautiful Idols & Statues
         </h1>
@@ -33,7 +50,11 @@ const Inspirations = () => {
           </button>
         </Link>
       </div>
-      <div className="slide-container md:w-[70vh] w-[50vh] overflow-hidden  md:mr-[10vh]">
+      <div 
+        className="slide-container md:w-[70vh] w-[50vh] overflow-hidden  md:mr-[10vh]"
+        data-aos="fade-right"
+        data-aos-duration="700"
+      >
         <Zoom scale={0.4}>
           {images.map((image) => (
             <img

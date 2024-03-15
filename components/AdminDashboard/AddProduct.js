@@ -105,7 +105,8 @@ export default function AddProduct({ products }) {
     }));
   };
 
-  const uploadProduct = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (
         !formData.name ||
@@ -120,94 +121,45 @@ export default function AddProduct({ products }) {
         toast.error("Please fill all required fields");
         return;
       }
-
-
-      const formDataToUpload = new FormData();
-      formDataToUpload.append("name", formData.name);
-      formDataToUpload.append("price", formData.price);
-      formDataToUpload.append("description", formData.description);
-      formDataToUpload.append("brand", formData.brand);
-      formDataToUpload.append("category", formData.category);
-      formDataToUpload.append("size", formData.size);
-      formDataToUpload.append("stock_quantity", formData.stock_quantity);
-
-      formData.images.forEach((imageUrl) =>
-        formDataToUpload.append("images", imageUrl)
+  
+      const uploadImageUrls = await Promise.all(
+        formData.images.map((imageUrl) => {
+          const data = {
+            name: formData.name,
+            size: formData.size,
+            description: formData.description,
+            price: formData.price,
+            category: formData.category,
+            brand: formData.brand,
+            stock_quantity: formData.stock_quantity,
+            imageUrl: imageUrl
+          };
+          return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/create-product`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.status) {
+                toast.success("Product Added Successfully");
+                return res.data; // Return the added product data
+              } else {
+                throw new Error(res.message || "Failed to add product");
+              }
+            })
+            .catch((error) => {
+              console.error("Error uploading product:", error);
+              toast.error("Failed to add product!");
+              throw error;
+            });
+        })
       );
-
-      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const response = await fetch(`${apiUrl}/create-product`,{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      
-      if (!response.ok) {
-        throw new Error("Failed to upload Product");
-      }
-
-      if (response.ok) {
-        closeModal();
-        toast.success("Product Added Successfully");
-        setFormData({
-          name: "",
-          size: "",
-          images: [],
-          description: "",
-          price: "",
-          category: "",
-          brand: "",
-          stock_quantity: ""
-        });
-        console.log("Product Added Successfully", formData);
-        // console.log("Product Added Successfully", formDataToUpload);
-
-      }
-      
-    } catch (error) {
-      console.error("Error uploading product:", error);
-    }
-  };
   
-  const productsArray = products ? products.data : [];
-
-  const sampleUploadProduct = async () => {
-    try {
-      const sampleProduct = {
-        name: "Sample Product",
-        price: 99.99,
-        description: "This is a sample product description.",
-        brand: "Sample Brand",
-        category: "Sample Category",
-        size: "Large",
-        stock_quantity: 50,
-        images: [
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150"
-        ]
-      };
-
-      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const response = await fetch(`${apiUrl}/create-product`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(sampleProduct)
-      });
-  
-      // Check if request was successful
-      if (!response.ok) {
-        throw new Error("Failed to upload Product");
-      }
-  
-      // Handle successful response
-      closeModal();
-      toast.success("Product Added Successfully");
+      console.log("Uploaded Product Data:", uploadImageUrls);
+      // Optionally, reset the form fields after successful upload
       setFormData({
         name: "",
         size: "",
@@ -218,12 +170,16 @@ export default function AddProduct({ products }) {
         brand: "",
         stock_quantity: ""
       });
-      console.log("Product Added Successfully", sampleProduct);
     } catch (error) {
       console.error("Error uploading product:", error);
+      // Show error message to the user
     }
+  };
+  
+  
+  const productsArray = products ? products.data : [];
 
-  }
+  
 
   return (
     <div className=" relative mx-auto my-[5vh]">
@@ -238,15 +194,9 @@ export default function AddProduct({ products }) {
         Add Product
       </button>
 
-      <button
-        onClick={sampleUploadProduct}
-      >
-        Upload Sample Data
-      </button>
-
       <div className="my-[5vh]">
         {productsArray.map((product) => (
-          <div className="flex flex-row justify-between my-[2vh] items-center bg-white shadow-md p-[2vh]">
+          <div key={product._id} className="flex flex-row justify-between my-[2vh] items-center bg-white shadow-md p-[2vh]">
             <img
               src={product.images[0]}
               alt=""
@@ -290,7 +240,9 @@ export default function AddProduct({ products }) {
             >
               <CloseIcon className="text-[5vh]" />
             </h1>
-            <div>
+
+            {/* form */}
+            <form onSubmit={handleSubmit}>
               <div>
                 <div className="relative">
                   <label
@@ -407,14 +359,14 @@ export default function AddProduct({ products }) {
                 </div>
 
                 <button
-                  onClick={uploadProduct}
-                  // type="submit"
+                  // onClick={uploadProduct}
+                  type="submit"
                   className="text-center rounded-md text-[3vh] text-white px-[2vh] py-[1vh] bg-green-600"
                 >
                   Save Changes
                 </button>
               </div>
-            </div>
+            </form>
 
           </div>
         </div>

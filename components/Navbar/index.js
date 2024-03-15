@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { useRouter } from "next/router";
+import "aos/dist/aos.css";
+import AOS from "aos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Person2Icon from "@mui/icons-material/Person2";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,10 +12,29 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Link from "next/link";
 import { useStateContext } from "../../context/StateContext";
 import { toast } from "react-hot-toast";
+import BackdropLoader from "../elements/BackdropLoader";
 
 const Navbar = () => {
+
   const { totalQuantities } = useStateContext();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, []);
 
   const toggleMobileNav = () => {
     setMobileNavOpen(!mobileNavOpen);
@@ -21,6 +42,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-white shadow-md mb-[1vh] static">
+      <BackdropLoader open={loading}/>
       <div className="p-[2vh] w-[%] md:w-[90%] mx-auto flex flex-row justify-between items-center">
 
         <div className="flex flex-row items-center">
@@ -28,7 +50,7 @@ const Navbar = () => {
             onClick={toggleMobileNav}
             className="md:hidden mr-[2vh] cursor-pointer"
           >
-            <MenuIcon className="text-[5vh] text-amber-950"/>
+            <MenuIcon className="text-[5vh] text-amber-950"/> 
           </div>
 
           <Link href="/">

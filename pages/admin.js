@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { useRouter } from 'next/router';
 import { isAdmin } from '../utils/auth';
 import Sidebar from '../components/AdminDashboard/Sidebar';
-import AddProduct from '@/components/AdminDashboard/SidebarComponent/AddProduct';
+import AddProduct from '@/components/AdminDashboard/AddProduct';
 
 export default function AdminPanel({products}) {
 

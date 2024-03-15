@@ -1,9 +1,24 @@
-"use client";
 import React from "react";
 import Link from "next/link";
+import { Skeleton } from "@mui/material";
 
 const ProductCard = ({ product }) => {
   const { _id, name, images, description, price } = product;
+
+  if (!name || !images || !description || !price) {
+    return (
+      <div className="relative bg-gray-100 shadow-lg w-[19vh] md:w-[35vh]">
+        <Skeleton variant="rectangular" width="100%" height={250} />
+
+        <div className="flex flex-col space-y-2 py-[1vh] px-[1vh]">
+          <Skeleton variant="text" width="80%" />
+          <Skeleton variant="text" width="90%" />
+          <Skeleton variant="text" width="70%" />
+        </div>
+      </div>
+    );
+  }
+
   const truncatedDescription =
     description.length > 50
       ? description.substring(0, 50) + "..."
@@ -15,7 +30,10 @@ const ProductCard = ({ product }) => {
     <Link href="/productdetails/[id]" as={`/productdetails/${_id}`}>
       <div className="relative cursor-pointer bg-gray-100 shadow-lg w-[19vh] md:w-[35vh]  ">
         <div>
-          <img src={images[0]} className="md:h-[38vh] md:w-[35vh] w-[20vh] h-[20vh] object-cover" />
+          <img
+            src={images[0]}
+            className="md:h-[38vh] md:w-[35vh] w-[20vh] h-[20vh] object-cover"
+          />
         </div>
 
         <p className="absolute z-20 top-[2vh] right-[2vh] text-white bg-red-500 md:w-[6vh] w-[4vh] h-[4vh] md:h-[6vh] rounded-full flex flex-row justify-center items-center">
