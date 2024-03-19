@@ -46,7 +46,7 @@ export default function checkout() {
     }
   };
 
-  const handlePaymentCompletion =()=>{
+  const handlePaymentCompletion = () => {
     setPaymentCompleted(true);
     setActiveStep(2)
   }
@@ -61,14 +61,13 @@ export default function checkout() {
             )}
             <div className="flex flex-col md:flex-row items-center px-[2vh] bg-white space-y-2">
               <p
-                className={`md:text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${
-                  activeStep > index || (paymentCompleted && index === 2)
-                    ? "bg-green-700 text-white"
-                    : "bg-[#B88E2F] text-white z-20"
-                } w-[5vh] h-[5vh] mr-[1.5vh]`}
+                className={`md:text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${activeStep > index || (paymentCompleted && index === 2)
+                  ? "bg-green-700 text-white"
+                  : "bg-[#B88E2F] text-white z-20"
+                  } w-[5vh] h-[5vh] mr-[1.5vh]`}
               >
                 {activeStep > index ||
-                (index === activeStep && paymentCompleted) ? (
+                  (index === activeStep && paymentCompleted) ? (
                   <span className="flex flex-row justify-center items-center">
                     {/* <FontAwesomeIcon
                       className="text-white text-[3vh]"
@@ -81,11 +80,10 @@ export default function checkout() {
                 )}
               </p>
               <h2
-                className={`md:text-[2.8vh] text-center mx-auto z-50 font-medium ${
-                  activeStep > index || (paymentCompleted && index === 2)
-                    ? "text-green-700"
-                    : "bg-white"
-                }`}
+                className={`md:text-[2.8vh] text-center mx-auto z-50 font-medium ${activeStep > index || (paymentCompleted && index === 2)
+                  ? "text-green-700"
+                  : "bg-white"
+                  }`}
               >
                 {step.label}
               </h2>
@@ -99,24 +97,27 @@ export default function checkout() {
       <div className="flex justify-end mt-4">
         {activeStep === 0 && (
           <>
-            <button
+            {/* <button
               onClick={() => handleStepChange(activeStep - 1)}
               disabled={activeStep === 0}
               className="bg-[#B88E2F] text-white px-4 py-2 rounded-md mr-4"
             >
               Back
-            </button>
-            <button
-              onClick={() => handleStepChange(activeStep + 1)}
-              disabled={activeStep === steps.length - 1}
-              className="bg-[#B88E2F] text-white px-4 py-2 rounded-md"
-            >
-              Next
-            </button>
+            </button> */}
+            {activeStep === 0 && !cartItems.length == 0 && (
+              <button
+                onClick={() => handleStepChange(activeStep + 1)}
+                disabled={activeStep === steps.length - 1}
+                className="bg-[#141414] shadow-md text-white hover:scale-110 font-bold font-poppins px-[4vh] py-[1.5vh] "
+              >
+                PLACE ORDER
+              </button>
+            )}
+
           </>
         )}
         {activeStep === 1 && (
-          <div className="flex flex-row gap-x-[1vh]">
+          <div className="flex flex-row gap-x-[1vh] relative">
             <button
               onClick={() => handleStepChange(activeStep - 1)}
               disabled={activeStep === 0}
@@ -124,7 +125,9 @@ export default function checkout() {
             >
               Back
             </button>
-            <Payment onPaymentComplete={handlePaymentCompletion}/>
+            <div className="absolute -top-[16vh] right-[15vh] " >
+              <Payment onPaymentComplete={handlePaymentCompletion} />
+            </div>
           </div>
         )}
       </div>

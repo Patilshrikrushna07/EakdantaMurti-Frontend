@@ -31,7 +31,7 @@ const HeroBanner = () => {
         ))}
       </div>
       <div 
-        className="w-[85vw] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl bg-gradient-to-r from-[#eddcc8f3] to-[#fffffff6] md:w-[35vw] flex flex-col space-y-4 p-[5vh]"
+        className="w-[85vw] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl md:bg-gradient-to-r md:from-[#eddcc8f3] md:to-[#fffffff6] bg-gradient-to-r from-[#eddcc8a3] to-[#ffffffab] md:w-[35vw] flex flex-col space-y-4 p-[5vh]"
       >
         <h3 className="text-[#333333] text-[2.5vh]">New Arrival</h3>
         <h1 className="text-[#846a28] text-[3.5vh] md:text-[6.5vh] font-bold font-mono leading-tight">

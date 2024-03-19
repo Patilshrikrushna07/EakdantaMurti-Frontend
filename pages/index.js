@@ -7,7 +7,7 @@ import Inspirations from "../components/HomeSection/Inspirations";
 import { NewArrivalSale } from "../components/HomeSection/NewArrivalSale";
 
 export default function Home({ products }) {
-  const productsArray = products.data.slice(0, 6);
+  const productsArray = products.data.slice(0, 8);
   console.log("Products received:", products);
 
   return (

@@ -86,7 +86,7 @@ export default function MakePayment({onPaymentComplete}) {
   return (
     <div>
       <button
-        className="bg-[#B88E2F] rounded-md p-[1.5vh] text-white"
+        className="bg-[#fcfcfc] shadow-xl text-[#141414] font-bold font-poppins w-[25vh] hover:scale-110 transition-all hover:bg-[#141414] hover:text-white py-[1.5vh]"
         onClick={paymentHandler}
       >
         {loading?(
@@ -96,9 +96,9 @@ export default function MakePayment({onPaymentComplete}) {
             </div>
           </div>
         ):(
-          <div>
+          <button>
             Pay Now!
-          </div>
+          </button>
         )}
       </button>
     </div>

@@ -8,7 +8,7 @@ export const NewArrivalSale = () => {
       {/* <img src='/newarrival.jpg'   /> */}
 
       <div 
-        className="md:ml-[52%] flex flex-col justify-center space-y-5 p-[10vh] h-[80vh]"
+        className="md:ml-[52%] flex flex-col justify-center space-y-5 p-[10vh] md:h-[80vh]"
         data-aos="zoom-in"
       >
         <h3 className="text-[#333333]">New Arrival</h3>
