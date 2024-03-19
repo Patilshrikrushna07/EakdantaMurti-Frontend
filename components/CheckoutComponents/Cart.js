@@ -97,14 +97,14 @@ export default function Cart() {
                 Total : Rs.{calculateTotal()}
               </p>
               <FormControlLabel
-                control={<Checkbox checked={checked} onChange={handleChange} />}
+                control={<Checkbox checked={checked} onChange={handleChange} required />}
                 label="I agree to the terms and conditions"
               />
             </div>
           </div>
         </div>
       ) : (
-        <div className="h-[60vh] ">
+        <div className="h-auto ">
           <p className="text-[5vh] text-center my-[2vh]">Your cart is empty!</p>
           <Link href="/shop">
             <p className="text-center my-[2vh] font-semibold shadow-md hover:scale-125 hover:bg-[#B88E2F] hover:text-white transition-all mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] w-[35vw] md:w-[15vw]">
