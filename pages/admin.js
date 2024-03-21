@@ -13,7 +13,20 @@ export default function AdminPanel({products}) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  let data = [];
+  const { req, locale, defaultLocale } = context;
+  const Cookie = req.headers.cookie;
+  const { auth_token} = req.cookies;
+
+  if (!auth_token) {
+    return {
+      redirect: {
+        destination: `/login`,
+        permanent: false,
+      },
+    };
+  }
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const response = await fetch(`${apiUrl}/get-all-products`);

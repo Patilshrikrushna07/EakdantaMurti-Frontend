@@ -173,3 +173,24 @@ const myaccount = () => {
 };
 
 export default myaccount;
+
+export async function getServerSideProps(context) {
+  let data = [];
+  const { req, locale, defaultLocale } = context;
+  const Cookie = req.headers.cookie;
+  const { auth_token} = req.cookies;
+
+  if (!auth_token) {
+    return {
+      redirect: {
+        destination: `/login`,
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      loggedInUser: auth_token ? true : false,
+    },
+  };
+}

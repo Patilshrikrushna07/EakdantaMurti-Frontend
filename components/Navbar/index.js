@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useStateContext } from "../../context/StateContext";
 import { toast } from "react-hot-toast";
 import BackdropLoader from "../elements/BackdropLoader";
+import { getCookie, getCookies } from "cookies-next";
 
 const Navbar = () => {
 
@@ -20,7 +21,8 @@ const Navbar = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
+  const authToken = getCookie('auth_token');
+  console.log(authToken);
   useEffect(() => {
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
@@ -74,9 +76,19 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="list-none flex flex-row gap-x-[2vh] md:gap-x-[4vh]">
-          <Link href='/myaccount'>
-          <Person2Icon className="cursor-pointer text-amber-800 text-[4.5vh]" />
-          </Link>
+          {
+            authToken?(
+              <Link href='/myaccount'>
+              <Person2Icon className="cursor-pointer text-amber-800 text-[4.5vh]" />
+              </Link>
+            ):(
+              <Link href='/login'>
+              <span className="cursor-pointer text-amber-800 text-[4.5vh]" >Login</span>
+              </Link>
+            )
+          }
+      
+         
           <SearchIcon className="cursor-pointer text-amber-800 text-[4.5vh]" />
           {/* <FavoriteIcon className="cursor-pointer text-red-500 text-[4.5vh]" /> */}
           <Link href="/checkout">
