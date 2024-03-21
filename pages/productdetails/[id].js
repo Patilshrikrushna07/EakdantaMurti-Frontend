@@ -4,9 +4,12 @@ import ShareIcon from "@mui/icons-material/Share";
 import { useStateContext } from "@/context/StateContext";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import { getCookie } from "cookies-next";
 
 
 export default function ProductDetails({ product }) {
+  const authToken = getCookie('auth_token');
+
   console.log("Product received in ProductDetails:", product);
 
   if (!product || !product.data) {

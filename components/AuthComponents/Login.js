@@ -11,13 +11,14 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { Password } from "@mui/icons-material";
+import { getCookie, getCookies, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -60,6 +61,9 @@ const Login = () => {
       if (loginResponse.ok) {
         const loginData = await loginResponse.json();
         sessionStorage.setItem("userData", JSON.stringify(loginData));
+        setCookie("auth_token", loginData.data.token, {
+          path: "/",
+        });
         const {isAdmin}=loginData;
         if(isAdmin){
           router.push("/admin");
