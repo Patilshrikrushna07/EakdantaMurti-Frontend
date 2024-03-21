@@ -64,11 +64,11 @@ const Login = () => {
         setCookie("auth_token", loginData.data.token, {
           path: "/",
         });
-        const {isAdmin}=loginData;
-        if(isAdmin){
+        
+        if (loginData.isAdmin) {
           router.push("/admin");
-        }else{
-          router.push("/")
+        } else {
+          router.push("/");
         }
         toast.success("Login successful");
       } else {
@@ -76,7 +76,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      toast.error("Error logging in");
+      toast.error("Error logging in, Try Signup");
     } finally {
       setLoading(false);
     }

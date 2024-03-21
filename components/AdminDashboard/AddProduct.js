@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
+import { getCookie, getCookies, setCookie } from "cookies-next";
 import { toast } from "react-hot-toast";
 
 export default function AddProduct({ products }) {
@@ -8,6 +9,7 @@ export default function AddProduct({ products }) {
   const [showModal, setShowModal] = useState(false);
   const [images, setImages] = useState([]);
   const [imageUploading, setImageUploading] = useState(false);
+  const token = getCookie('auth_token')
 
   const [formData, setFormData] = useState({
     name: "",
@@ -122,57 +124,47 @@ export default function AddProduct({ products }) {
         return;
       }
   
-      const uploadImageUrls = await Promise.all(
-        formData.images.map((imageUrl) => {
-          const data = {
-            name: formData.name,
-            size: formData.size,
-            description: formData.description,
-            price: formData.price,
-            category: formData.category,
-            brand: formData.brand,
-            stock_quantity: formData.stock_quantity,
-            imageUrl: imageUrl
-          };
-          return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/create-product`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              if (res.status) {
-                toast.success("Product Added Successfully");
-                return res.data; // Return the added product data
-              } else {
-                throw new Error(res.message || "Failed to add product");
-              }
-            })
-            .catch((error) => {
-              console.error("Error uploading product:", error);
-              toast.error("Failed to add product!");
-              throw error;
-            });
-        })
-      );
+      const data = {
+        name: formData.name,
+        size: formData.size,
+        description: formData.description,
+        price: formData.price,
+        category: formData.category,
+        brand: formData.brand,
+        stock_quantity: formData.stock_quantity,
+        images: formData.images // Sending all images as an array
+      };
   
-      console.log("Uploaded Product Data:", uploadImageUrls);
-      // Optionally, reset the form fields after successful upload
-      setFormData({
-        name: "",
-        size: "",
-        images: [],
-        description: "",
-        price: "",
-        category: "",
-        brand: "",
-        stock_quantity: ""
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/create-product`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data)
       });
+  
+      const responseData = await response.json();
+  
+      if (response.status === 200 && responseData.status) {
+        toast.success("Product Added Successfully");
+        // Optionally, reset the form fields after successful upload
+        setFormData({
+          name: "",
+          size: "",
+          images: [],
+          description: "",
+          price: "",
+          category: "",
+          brand: "",
+          stock_quantity: ""
+        });
+      } else {
+        throw new Error(responseData.message || "Failed to add product");
+      }
     } catch (error) {
       console.error("Error uploading product:", error);
-      // Show error message to the user
+      toast.error("Failed to add product!");
     }
   };
   
