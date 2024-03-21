@@ -43,7 +43,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white shadow-md  static">
+    <div className="bg-white shadow-md mb-[0.5vh] static">
       <BackdropLoader open={loading}/>
       <div className="p-[2vh] w-[%] md:w-[90%] mx-auto flex flex-row justify-between items-center">
 
@@ -75,7 +75,7 @@ const Navbar = () => {
             <li className="text-[2.7vh] font-semibold">Contact</li>
           </Link>
         </div>
-        <div className="list-none flex flex-row gap-x-[2vh] md:gap-x-[4vh]">
+        <div className="list-none flex flex-row items-center gap-x-[2vh] md:gap-x-[4vh]">
           {
             authToken?(
               <Link href='/myaccount'>
@@ -83,13 +83,15 @@ const Navbar = () => {
               </Link>
             ):(
               <Link href='/login'>
-              <span className="cursor-pointer text-amber-800 text-[4.5vh]" >Login</span>
+              <span className="cursor-pointer text-white px-[2vh] py-[1.5vh] bg-amber-900 text-[2.6vh]" >Login</span>
               </Link>
             )
           }
-      
-         
-          <SearchIcon className="cursor-pointer text-amber-800 text-[4.5vh]" />
+
+          <Link href="/shop">
+            <SearchIcon className="cursor-pointer text-amber-800 text-[4.5vh]" />
+          </Link>
+          
           {/* <FavoriteIcon className="cursor-pointer text-red-500 text-[4.5vh]" /> */}
           <Link href="/checkout">
             <div className="relative">
