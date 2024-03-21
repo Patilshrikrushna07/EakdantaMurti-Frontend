@@ -39,7 +39,7 @@ export default function MakePayment({onPaymentComplete}) {
         currency: currency,
         name: "Ekdanta Murtis",
         description: "Test Transaction",
-        image: "/favicon.ico",
+        image: "https://res.cloudinary.com/gaurav-1920/image/upload/v1710866284/logo_kfwons.jpg",
         order_id: order.id,
         handler: async function (response) {
           const body = {

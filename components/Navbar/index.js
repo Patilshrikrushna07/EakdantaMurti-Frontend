@@ -41,7 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white shadow-md mb-[1vh] static">
+    <div className="bg-white shadow-md  static">
       <BackdropLoader open={loading}/>
       <div className="p-[2vh] w-[%] md:w-[90%] mx-auto flex flex-row justify-between items-center">
 
