@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyAccount from "../components/AuthComponents/MyAccount";
 import MyOrders from "../components/AuthComponents/MyOrders";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const MyAccountPage = () => {
   const [activeBtn, setActiveBtn] = useState("MyAccount");
@@ -12,11 +12,12 @@ const MyAccountPage = () => {
 
   const router = useRouter();
 
-  const handleLogout=()=>{
-    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  const handleLogout = () => {
+    document.cookie =
+      "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     // Redirect to the login page
     router.push("/login");
-  }
+  };
 
   return (
     <div>
@@ -40,7 +41,7 @@ const MyAccountPage = () => {
           </button>
         </div>
         <h1 className="text-[3.5vh] font-medium mx-auto">My Account</h1>
-        <button 
+        <button
           onClick={handleLogout}
           className="bg-red-600 absolute right-0 text-white text-[2.6vh] rounded-xl px-[2vh] py-[1.5vh]"
         >
@@ -48,11 +49,7 @@ const MyAccountPage = () => {
         </button>
       </div>
       <div className="w-[80vw] mx-auto overflow-hidden m-[10vh]">
-        {activeBtn === "MyAccount" ? (
-          <MyAccount />
-        ) : (
-          <MyOrders />
-        )}
+        {activeBtn === "MyAccount" ? <MyAccount /> : <MyOrders />}
       </div>
     </div>
   );
@@ -74,6 +71,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
   return {
     props: {
       loggedInUser: auth_token ? true : false,
