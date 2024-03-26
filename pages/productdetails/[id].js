@@ -61,7 +61,7 @@ export default function ProductDetails({ product }) {
           {images.map((image, index) => (
             <img
               key={index}
-              className={`md:h-[20vh] md:w-[25vh] w-[10vh] object-cover ${
+              className={`md:h-[20vh] md:w-[18vh] w-[10vh] object-cover ${
                 index !== 0 ? "ml-[2vh] my-[2vh] md:ml-[0vh]" : ""
               }`}
               src={image}
@@ -70,7 +70,7 @@ export default function ProductDetails({ product }) {
             />
           ))}
         </div>
-        <div className="relative">
+        <div className="relative md:w-[40vw]">
           {/* {selectedImage && (
             <ReactImageMagnify
               {...{
@@ -101,7 +101,7 @@ export default function ProductDetails({ product }) {
           )}
         </div>
       </div>
-      <div className="flex flex-col space-y-4 md:ml-[2vh]">
+      <div className="flex flex-col space-y-4 md:ml-[2vh] md:w-[50vw]">
         <h1 className="md:text-[5vh] text-[3vh] text-[#303030] font-medium ">
           {name}
         </h1>

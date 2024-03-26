@@ -5,11 +5,10 @@ import { getCookie, getCookies, setCookie } from "cookies-next";
 import { toast } from "react-hot-toast";
 
 export default function AddProduct({ products }) {
-
   const [showModal, setShowModal] = useState(false);
   const [images, setImages] = useState([]);
   const [imageUploading, setImageUploading] = useState(false);
-  const token = getCookie('auth_token')
+  const token = getCookie("auth_token");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,7 +18,7 @@ export default function AddProduct({ products }) {
     price: "",
     category: "",
     brand: "",
-    stock_quantity: ""
+    stock_quantity: "",
   });
 
   const openModal = () => {
@@ -62,7 +61,7 @@ export default function AddProduct({ products }) {
     const uploadPromises = validFiles.map((file) => {
       const data = new FormData();
       data.append("file", file);
-      data.append("upload_preset", "ekdanta-murti"); 
+      data.append("upload_preset", "ekdanta-murti");
       data.append("cloud_name", "gaurav-1920");
 
       return fetch("https://api.cloudinary.com/v1_1/gaurav-1920/image/upload", {
@@ -101,9 +100,7 @@ export default function AddProduct({ products }) {
   const removeImage = (indexToRemove) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      images: prevFormData.images.filter(
-        (_, index) => index !== indexToRemove
-      ),
+      images: prevFormData.images.filter((_, index) => index !== indexToRemove),
     }));
   };
 
@@ -123,7 +120,7 @@ export default function AddProduct({ products }) {
         toast.error("Please fill all required fields");
         return;
       }
-  
+
       const data = {
         name: formData.name,
         size: formData.size,
@@ -132,20 +129,23 @@ export default function AddProduct({ products }) {
         category: formData.category,
         brand: formData.brand,
         stock_quantity: formData.stock_quantity,
-        images: formData.images // Sending all images as an array
+        images: formData.images, // Sending all images as an array
       };
-  
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/create-product`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data)
-      });
-  
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/create-product`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
       const responseData = await response.json();
-  
+
       if (response.status === 200 && responseData.status) {
         toast.success("Product Added Successfully");
         // Optionally, reset the form fields after successful upload
@@ -157,7 +157,7 @@ export default function AddProduct({ products }) {
           price: "",
           category: "",
           brand: "",
-          stock_quantity: ""
+          stock_quantity: "",
         });
       } else {
         throw new Error(responseData.message || "Failed to add product");
@@ -167,11 +167,8 @@ export default function AddProduct({ products }) {
       toast.error("Failed to add product!");
     }
   };
-  
-  
-  const productsArray = products ? products.data : [];
 
-  
+  const productsArray = products ? products.data : [];
 
   return (
     <div className=" relative mx-auto my-[5vh]">
@@ -188,7 +185,10 @@ export default function AddProduct({ products }) {
 
       <div className="my-[5vh]">
         {productsArray.map((product) => (
-          <div key={product._id} className="flex flex-row justify-between my-[2vh] items-center bg-white shadow-md p-[2vh]">
+          <div
+            key={product._id}
+            className="flex flex-row justify-between my-[2vh] items-center bg-white shadow-md p-[2vh]"
+          >
             <img
               src={product.images[0]}
               alt=""
@@ -359,7 +359,6 @@ export default function AddProduct({ products }) {
                 </button>
               </div>
             </form>
-
           </div>
         </div>
       )}

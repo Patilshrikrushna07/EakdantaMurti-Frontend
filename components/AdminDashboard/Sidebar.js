@@ -10,10 +10,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Dashboard } from './SidebarComponent/Dashboard';
 import { Order } from './SidebarComponent/Order';
 import AddProduct from './AddProduct';
+import { User } from './SidebarComponent/User';
 
-const Sidebar = ({products}) => {
+const Sidebar = ({ products }) => {
   const [activeComponent, setActiveComponent] = useState(Dashboard); // State to hold the active component
-  console.log('PRODUCT',products);
+  console.log('PRODUCT', products);
   const handleComponentChange = (component) => {
     setActiveComponent(component);
   };
@@ -23,7 +24,7 @@ const Sidebar = ({products}) => {
       {/* Sidebar */}
       <div className="bg-gray-800 h-screen w-[18vw] pt-[5vh]   top-0 left-0 overflow-y-auto">
         <div className="p-4">
-          
+
           <h2 className="text-white  font-semibold text-center md:text-[4vh]">Admin Panel</h2>
         </div>
         <nav className="text-white">
@@ -36,23 +37,23 @@ const Sidebar = ({products}) => {
             </li>
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <div onClick={() => handleComponentChange(<Order />)} className="cursor-pointer">
-              <ShoppingCartIcon className="mr-2" />
+                <ShoppingCartIcon className="mr-2" />
                 Order
               </div>
             </li>
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
-            <div onClick={() => handleComponentChange(<AddProduct products={products}/>)} className="cursor-pointer">
-            <StorefrontIcon className="mr-2" />
+              <div onClick={() => handleComponentChange(<AddProduct products={products} />)} className="cursor-pointer">
+                <StorefrontIcon className="mr-2" />
                 Add Product
               </div>
             </li>
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
-              <Link href="/customers">
+            <div onClick={() => handleComponentChange(<User />)} className="cursor-pointer">
                 <span className="flex items-center">
                   <PeopleIcon className="mr-2" />
                   User
                 </span>
-              </Link>
+              </div>
             </li>
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <Link href="/settings">
@@ -78,7 +79,7 @@ const Sidebar = ({products}) => {
       <div className="ml-2 p-8 w-[90vw] h-[100vh] overflow-y-scroll">
         {activeComponent}
       </div>
-     
+
     </div>
   );
 };
