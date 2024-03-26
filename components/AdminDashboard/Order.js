@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { getCookie, getCookies, setCookie } from "cookies-next";
 
-export const Order = () => {
+export const Order = ({ summary }) => {
+  const token = getCookie("auth_token");
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const handleOrderClick = (order) => {
@@ -11,72 +13,52 @@ export const Order = () => {
     setSelectedOrder(null);
   };
 
-  const [selectedStatus, setSelectedStatus] = useState('Delivered');
+  const [selectedStatus, setSelectedStatus] = useState("Delivered");
 
   const handleStatusChange = (event) => {
     setSelectedStatus(event.target.value);
-  }
+  };
 
-  const recentOrders = [
-    {
-      id: 451,
-      customer: "John Doe",
-      total: 100,
-      date: "2024-03-10",
-      userName: "john_doe",
-      quantity: 5,
-      products: [
-        {
-          id: 1,
-          name: "Product 1",
-          price: 10,
-          quantity: 2,
-          image: "/sale1.jpg",
-        },
-        {
-          id: 2,
-          name: "Product 2",
-          price: 20,
-          quantity: 3,
-          image: "/sale2.jpg",
-        },
-        // Add more products as needed
-      ],
-    },
-    // Add more orders here
-  ];
+  // const OrderSummary = async () => {
+  //   try {
+  //     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  //     const response = await fetch(`${apiUrl}/get-all-orders`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     const summary = await response.json();
+  console.log("Order Details fetched successfully", summary);
+  //   } catch (error) {
+  //     console.error("Error fetching product details:", error);
+  //   }
+  // };
+  // const summaryArray = summary ? summary.data : [];
 
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Order History</h1>
+      {/* <button onClick={OrderSummary}>Get order api</button> */}
       <table className="table-auto w-full">
         <thead>
           <tr>
             <th className="border px-4 py-2">Order ID</th>
-            <th className="border px-4 py-2">Customer</th>
-            <th className="border px-4 py-2">Total</th>
+            <th className="border px-4 py-2">User ID</th>
             <th className="border px-4 py-2">Date</th>
+            <th className="border px-4 py-2">Total</th>
             <th className="border px-4 py-2">Status</th>
             <th className="border px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {recentOrders.map((order) => (
-            <tr key={order.id}>
-              <td className="border px-4 py-2  text-center">{order.id}</td>
-              <td className="border px-4 py-2  text-center">
-                {order.customer}
-              </td>
-              <td className="border px-4 py-2  text-center">{order.total}</td>
-              <td className="border px-4 py-2  text-center">{order.date}</td>
-              <td className="border px-4 py-2  text-center !bg-none">
-                <select id="status" className="!bg-white" value={selectedStatus} onChange={handleStatusChange}>
-                  <option value="Delivered" >Delivered</option>
-                  <option value="Progress">In Progress</option>
-                  <option value="Dispatched">Dispatched</option>
-                </select>
-              </td>
-              <td className="border px-4 py-2  text-center">
+          {summary.data && summary.data.map((order) => (
+            <tr key={order._id}>
+              <td className="border px-4 py-2 text-center">{order._id}</td>
+              <td className="border px-4 py-2 text-center">{order.user_id}</td>
+              <td className="border px-4 py-2 text-center">{order.order_date}</td>
+              <td className="border px-4 py-2 text-center">{order.total_amount}</td>
+              <td className="border px-4 py-2 text-center">
                 <button
                   onClick={() => handleOrderClick(order)}
                   className="bg-blue-500 text-white px-4 py-2 rounded-md"
@@ -112,8 +94,7 @@ export const Order = () => {
                 </tr>
                 <tr>
                   <td className="font-semibold">Status:</td>
-                  <td>{selectedStatus}
-                  </td>
+                  <td>{selectedStatus}</td>
                 </tr>
                 <tr>
                   <td className="font-semibold">Quantity:</td>

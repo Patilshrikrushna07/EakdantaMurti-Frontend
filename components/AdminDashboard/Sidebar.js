@@ -8,13 +8,13 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Dashboard } from './SidebarComponent/Dashboard';
-import { Order } from './SidebarComponent/Order';
+import { Order } from './Order';
 import AddProduct from './AddProduct';
 import { User } from './SidebarComponent/User';
 
-const Sidebar = ({ products }) => {
+const Sidebar = ({ products ,summary}) => {
   const [activeComponent, setActiveComponent] = useState(Dashboard); // State to hold the active component
-  console.log('PRODUCT', products);
+  
   const handleComponentChange = (component) => {
     setActiveComponent(component);
   };
@@ -36,7 +36,7 @@ const Sidebar = ({ products }) => {
               </div>
             </li>
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
-              <div onClick={() => handleComponentChange(<Order />)} className="cursor-pointer">
+              <div onClick={() => handleComponentChange(<Order summary={summary} />)} className="cursor-pointer">
                 <ShoppingCartIcon className="mr-2" />
                 Order
               </div>
