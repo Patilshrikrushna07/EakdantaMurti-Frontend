@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Order } from "./Order";
+import { Order } from "../Order";
 
 export const Dashboard = () => {
   const recentOrders = [
