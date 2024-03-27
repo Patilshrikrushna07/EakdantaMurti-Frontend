@@ -4,6 +4,7 @@ import MyOrders from "../components/AuthComponents/MyOrders";
 import { useRouter } from "next/router";
 
 const MyAccountPage = () => {
+  
   const [activeBtn, setActiveBtn] = useState("MyAccount");
 
   const handleBtnClick = (button) => {
