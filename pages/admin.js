@@ -1,10 +1,11 @@
-import React from 'react';
-import Sidebar from '../components/AdminDashboard/Sidebar';
+import React from "react";
+import Sidebar from "../components/AdminDashboard/Sidebar";
 
-export default function AdminPanel({ products, summary }) {
+export default function AdminPanel({ products, summary, userdetail }) {
+  // console.log("User data : ", userdetail);
   return (
-    <div className='bg-[#fffffff8]'>
-      <Sidebar products={products} summary={summary} />
+    <div className="bg-[#fffffff8]">
+      <Sidebar products={products} summary={summary} userdetail = {userdetail} />
     </div>
   );
 }
@@ -12,6 +13,8 @@ export default function AdminPanel({ products, summary }) {
 export async function getServerSideProps(context) {
   let products = [];
   let summary = null;
+  let userdetail = [];
+
   const { req } = context;
   const { auth_token } = req.cookies;
 
@@ -25,18 +28,30 @@ export async function getServerSideProps(context) {
   }
 
   try {
-    const apiUrlProducts = process.env.NEXT_PUBLIC_API_BASE_URL + '/get-all-products';
-    const apiUrlOrders = process.env.NEXT_PUBLIC_API_BASE_URL + '/get-all-orders';
+    const apiUrlProducts =
+      process.env.NEXT_PUBLIC_API_BASE_URL + "/get-all-products";
+    const apiUrlOrders =
+      process.env.NEXT_PUBLIC_API_BASE_URL + "/get-all-orders";
+    const apiUrlUserdetail =
+      process.env.NEXT_PUBLIC_API_BASE_URL + "/get-all-users";
 
-    const [productsResponse, ordersResponse] = await Promise.all([
-      fetch(apiUrlProducts),
-      fetch(apiUrlOrders, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${auth_token}`,
-        },
-      })
-    ]);
+    const [productsResponse, ordersResponse, userdetailResponse] =
+      await Promise.all([
+        fetch(apiUrlProducts),
+        
+        fetch(apiUrlOrders, {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${auth_token}`,
+          },
+        }),
+        fetch(apiUrlUserdetail, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth_token}`,
+          },
+        }),
+      ]);
 
     if (!productsResponse.ok) {
       throw new Error("Failed to fetch products");
@@ -44,9 +59,13 @@ export async function getServerSideProps(context) {
     if (!ordersResponse.ok) {
       throw new Error("Failed to fetch orders");
     }
+    if (!userdetailResponse.ok) {
+      throw new Error("Failed to fetch user details");
+    }
 
     products = await productsResponse.json();
     summary = await ordersResponse.json();
+    userdetail = await userdetailResponse.json();
 
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -56,6 +75,7 @@ export async function getServerSideProps(context) {
     props: {
       products: products || [],
       summary: summary || null,
+      userdetail: userdetail || [],
     },
   };
 }
