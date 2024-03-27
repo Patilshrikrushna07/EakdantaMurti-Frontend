@@ -227,7 +227,8 @@ export default function AddProduct({ products }) {
     }
   };
 
-  const handleEditProduct = async () => {
+  const handleEditProduct = async (e) => {
+    e.preventDefault();
     try {
       console.log("Starting handleEditProduct function");
       const data = {

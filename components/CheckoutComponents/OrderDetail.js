@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useStateContext } from "../../context/StateContext";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import { getCookie } from "cookies-next";
+import { toast } from "react-hot-toast";
 
 export default function OrderDetail() {
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -17,7 +18,6 @@ export default function OrderDetail() {
     state: "",
     pincode: "",
     password: "",
-    confirmPassword: "",
   });
 
   const calculateTotal = () => {
@@ -27,6 +27,53 @@ export default function OrderDetail() {
   };
   const [checked, setChecked] = useState(false);
 
+  const { totalPrice } = useStateContext();
+  const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  // Fetch User Login Details
+  useEffect(() => {
+    const UserDetails = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+        const token = getCookie("auth_token");
+
+        if (!token) {
+          console.log("User not authenticated");
+          return;
+        }
+
+        const userId = sessionStorage.getItem("user_id");
+
+        if (!userId) {
+          console.log("User ID not found in session storage");
+          return;
+        }
+
+        const response = await fetch(`${apiUrl}/get-user-details/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user details");
+        }
+
+        const userData = await response.json();
+        console.log("User Details Fetched Successfully", userData);
+
+        // Set the form data with fetched user details
+        setFormData(userData.data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+
+    UserDetails();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -34,10 +81,45 @@ export default function OrderDetail() {
       [name]: value,
     }));
   };
-  const { totalPrice } = useStateContext();
-  const router = useRouter();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+
+  // For Saving Details
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const token = getCookie("auth_token");
+
+      if (!token) {
+        console.log("User not authenticated");
+        return;
+      }
+
+      const userId = sessionStorage.getItem("user_id");
+
+      if (!userId) {
+        console.log("User ID not found in session storage");
+        return;
+      }
+
+      const response = await fetch(`${apiUrl}/edit-profile-details/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user details");
+      }
+
+      console.log("User Details updated successfully");
+      toast.success("Delivery Details Updated Successfully!!");
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <div>
@@ -45,10 +127,12 @@ export default function OrderDetail() {
         Order Details
       </h1>
       <div className="flex space-x-7 md:flex-row flex-col">
-        <form className="flex flex-col w-full mx-auto text-[#202020]  " >
+        <form
+          className="flex flex-col w-full mx-auto text-[#202020]"
+          onSubmit={handleSave}
+        >
           <div className="flex flex-col w-full space-y-5  justify-between">
             <div>
-            
               <div className="flex flex-col md:flex-row justify-between">
                 <TextField
                   id="standard-basic"
@@ -168,7 +252,13 @@ export default function OrderDetail() {
                 />
               </div>
             </div>
-         
+
+            <button
+              type="submit"
+              className="text-center px-[3vh] rounded-sm font-semibold shadow-md hover:scale-125 transition-all hover:bg-[#B88E2F] hover:text-[#f5f4f4] w-fit py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] "
+            >
+              Save Details
+            </button>
           </div>
         </form>
         <div className="md:w-[40vw] sticky bg-[#e2e2e2be]  shadow-md flex flex-col justify-center  space-y-4">

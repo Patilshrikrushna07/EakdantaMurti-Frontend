@@ -60,11 +60,16 @@ const Login = () => {
 
       if (loginResponse.ok) {
         const loginData = await loginResponse.json();
-        sessionStorage.setItem("userData", JSON.stringify(loginData));
+        
+        // Store user ID and token in session storage
+        sessionStorage.setItem("user_id", loginData.data._id);
+        sessionStorage.setItem("auth_token", loginData.data.token);
+        
+        // Set auth token as cookie
         setCookie("auth_token", loginData.data.token, {
           path: "/",
         });
-        
+  
         if (loginData.isAdmin) {
           router.push("/admin");
         } else {

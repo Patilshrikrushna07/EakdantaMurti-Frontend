@@ -6,7 +6,6 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
 
-
 export default function ProductDetails({ product }) {
   const authToken = getCookie('auth_token');
 
@@ -61,12 +60,12 @@ export default function ProductDetails({ product }) {
           {images.map((image, index) => (
             <img
               key={index}
-              className={`md:h-[20vh] md:w-[18vh] w-[10vh] object-cover ${
+              className={`md:h-[20vh] cursor-pointer md:w-[18vh] w-[10vh] object-cover ${
                 index !== 0 ? "ml-[2vh] my-[2vh] md:ml-[0vh]" : ""
               }`}
               src={image}
               alt={name}
-              onClick={() => handleImageClick(image)}
+              onMouseEnter={() => handleImageClick(image)}
             />
           ))}
         </div>
