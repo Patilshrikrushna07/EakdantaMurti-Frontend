@@ -13,7 +13,7 @@ import AddProduct from "./AddProduct";
 import { User } from "./SidebarComponent/User";
 import { useRouter } from "next/router";
 
-const Sidebar = ({ products, summary }) => {
+const Sidebar = ({ products, summary , userdetail }) => {
   
   const router = useRouter();
 
@@ -74,7 +74,7 @@ const Sidebar = ({ products, summary }) => {
             </li>
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <div
-                onClick={() => handleComponentChange(<User />)}
+                onClick={() => handleComponentChange(<User userdetail={userdetail} />)}
                 className="cursor-pointer"
               >
                 <span className="flex items-center">
@@ -83,14 +83,7 @@ const Sidebar = ({ products, summary }) => {
                 </span>
               </div>
             </li>
-            <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
-              <Link href="/settings">
-                <span className="flex items-center">
-                  <SettingsIcon className="mr-2" />
-                  Settings
-                </span>
-              </Link>
-            </li>
+            
             <li onClick={handleLogout} className="cursor-pointer px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <span className="flex items-center">
                 <LogoutIcon className="mr-2" />
