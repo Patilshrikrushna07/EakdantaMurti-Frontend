@@ -32,8 +32,14 @@ const Footer = () => {
         </div>
         <div>
           <p className='text-[#9F9F9F] py-5'>Newsletters</p>
-          <TextField id="standard-basic" label="Enter your email address" variant="standard" />
-          <Link href="/"><p>Subscribe</p></Link>
+          <TextField className='w-full' id="standard-basic" label="Enter your email address" variant="standard" />
+          <Link href="/">
+            <button
+              className="text-center my-[2vh] px-[2vh] rounded-sm font-semibold shadow-md hover:scale-105 transition-all hover:bg-[#B88E2F] hover:text-[#f5f4f4] w-fit py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] "
+            >
+              Subscribe
+            </button>
+          </Link>
         </div>
       </div>
       <div className=" border-t-2 my-[2vh] py-[2vh] border-[#D9D9D9]">

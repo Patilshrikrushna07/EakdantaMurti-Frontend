@@ -3,7 +3,8 @@ import MyAccount from "../components/AuthComponents/MyAccount";
 import MyOrders from "../components/AuthComponents/MyOrders";
 import { useRouter } from "next/router";
 
-const MyAccountPage = () => {
+const MyAccountPage = ({loggedInUser}) => {
+  
   const [activeBtn, setActiveBtn] = useState("MyAccount");
 
   const handleBtnClick = (button) => {
@@ -43,7 +44,7 @@ const MyAccountPage = () => {
         <h1 className="text-[3.5vh] font-medium mx-auto">My Account</h1>
         <button
           onClick={handleLogout}
-          className="bg-red-600 absolute right-0 text-white text-[2.6vh] rounded-xl px-[2vh] py-[1.5vh]"
+          className="absolute right-0 text-center px-[3vh] rounded-sm font-semibold shadow-md hover:scale-125 transition-all hover:bg-red-600 hover:text-[#f5f4f4] w-fit py-[1vh] text-red-600  border-red-600 border-[0.3vh] "
         >
           Logout
         </button>

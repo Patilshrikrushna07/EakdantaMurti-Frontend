@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Payment from "../components/CheckoutComponents/Payment";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function checkout() {
   const { cartItems } = useStateContext();
@@ -48,8 +49,8 @@ export default function checkout() {
 
   const handlePaymentCompletion = () => {
     setPaymentCompleted(true);
-    setActiveStep(2)
-  }
+    setActiveStep(2);
+  };
 
   return (
     <div className="w-[90%] mx-auto my-[10vh]">
@@ -61,13 +62,14 @@ export default function checkout() {
             )}
             <div className="flex flex-col md:flex-row items-center px-[2vh] bg-white space-y-2">
               <p
-                className={`md:text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${activeStep > index || (paymentCompleted && index === 2)
-                  ? "bg-green-700 text-white"
-                  : "bg-[#B88E2F] text-white z-20"
-                  } w-[5vh] h-[5vh] mr-[1.5vh]`}
+                className={`md:text-[2.4vh] flex flex-row  items-center justify-center font-semibold rounded-full ${
+                  activeStep > index || (paymentCompleted && index === 2)
+                    ? "bg-green-700 text-white"
+                    : "bg-[#B88E2F] text-white z-20"
+                } w-[5vh] h-[5vh] mr-[1.5vh]`}
               >
                 {activeStep > index ||
-                  (index === activeStep && paymentCompleted) ? (
+                (index === activeStep && paymentCompleted) ? (
                   <span className="flex flex-row justify-center items-center">
                     {/* <FontAwesomeIcon
                       className="text-white text-[3vh]"
@@ -80,10 +82,11 @@ export default function checkout() {
                 )}
               </p>
               <h2
-                className={`md:text-[2.8vh] text-center mx-auto z-50 font-medium ${activeStep > index || (paymentCompleted && index === 2)
-                  ? "text-green-700"
-                  : "bg-white"
-                  }`}
+                className={`md:text-[2.8vh] text-center mx-auto z-50 font-medium ${
+                  activeStep > index || (paymentCompleted && index === 2)
+                    ? "text-green-700"
+                    : "bg-white"
+                }`}
               >
                 {step.label}
               </h2>
@@ -113,7 +116,6 @@ export default function checkout() {
                 PLACE ORDER
               </button>
             )}
-
           </>
         )}
         {activeStep === 1 && (
@@ -125,7 +127,7 @@ export default function checkout() {
             >
               Back
             </button>
-            <div className="absolute -top-[16vh] right-[15vh] " >
+            <div className="absolute -top-[16vh] right-[15vh] ">
               <Payment onPaymentComplete={handlePaymentCompletion} />
             </div>
           </div>
@@ -133,4 +135,27 @@ export default function checkout() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  let data = [];
+  const { req, locale, defaultLocale } = context;
+
+  const Cookie = req.headers.cookie;
+  const { auth_token } = req.cookies;
+
+  if (!auth_token) {
+    return {
+      redirect: {
+        destination: `/login`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      loggedInUser: auth_token ? true : false,
+    },
+  };
 }

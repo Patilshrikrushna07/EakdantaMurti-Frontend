@@ -1,3 +1,4 @@
+import React from 'react';
 import Sidebar from '../components/AdminDashboard/Sidebar';
 
 export default function AdminPanel({ products, summary }) {
