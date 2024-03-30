@@ -5,47 +5,45 @@ import { OrderStatus } from "@/components/CheckoutComponents/OrderStatus";
 import { useRouter } from "next/router";
 import { useStateContext } from "../context/StateContext";
 import { toast } from "react-hot-toast";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import Link from "next/link";
 import Payment from "../components/CheckoutComponents/Payment";
-import { redirect } from "next/dist/server/api-utils";
+// import { redirect } from "next/dist/server/api-utils";
 
 export default function checkout() {
+
   const { cartItems } = useStateContext();
   const [activeStep, setActiveStep] = useState(0);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
+  const [cartData, setCartData] = useState([]);
 
   const steps = [
     { label: "Shopping Cart", component: <Cart /> },
     { label: "Order Detail", component: <OrderDetail /> },
-    {
-      label: "Order Status",
-      component: <OrderStatus />,
-    },
+    { label: "Order Status", component: <OrderStatus /> },
   ];
 
   const router = useRouter();
 
-  const handleStepChange = (index) => {
+  const handleStepChange = (index,data) => {
     if (index === activeStep + 1) {
       if (index === 1 && cartItems.length === 0) {
         toast.error("Your cart is empty. Please add items to proceed.");
         return;
       }
+      setCartData(data);    
     }
     setActiveStep(index);
   };
 
-  const handlePayNow = () => {
-    if (activeStep === 1 && cartItems.length > 0) {
-      setPaymentCompleted(true);
-      setActiveStep(2);
-    } else {
-      setPaymentFailed(true);
-      toast.error("Your cart is empty or payment could not be processed.");
-      setActiveStep(2);
+  const handlePlaceOrder = ()=>{
+    if(cartItems.length > 0){
+      console.log("Cart Data:",cartItems);
+      handleStepChange(activeStep + 1, cartItems);
+    } else{
+      toast.error("Your cart is empty. Please add items to proceed.")
     }
-  };
+  }
 
   const handlePaymentCompletion = () => {
     setPaymentCompleted(true);
@@ -109,7 +107,8 @@ export default function checkout() {
             </button> */}
             {activeStep === 0 && !cartItems.length == 0 && (
               <button
-                onClick={() => handleStepChange(activeStep + 1)}
+                // onClick={() => handleStepChange(activeStep + 1)}
+                onClick={handlePlaceOrder}
                 disabled={activeStep === steps.length - 1}
                 className="bg-[#141414] shadow-md text-white hover:scale-110 font-bold font-poppins px-[4vh] py-[1.5vh] "
               >
@@ -118,6 +117,7 @@ export default function checkout() {
             )}
           </>
         )}
+
         {activeStep === 1 && (
           <div className="flex flex-row gap-x-[1vh] relative">
             <button
@@ -128,7 +128,7 @@ export default function checkout() {
               Back
             </button>
             <div className="absolute -top-[16vh] right-[15vh] ">
-              <Payment onPaymentComplete={handlePaymentCompletion} />
+              <Payment cartData={cartData} onPaymentComplete={handlePaymentCompletion} />
             </div>
           </div>
         )}

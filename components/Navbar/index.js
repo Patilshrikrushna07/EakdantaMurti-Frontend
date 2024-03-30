@@ -21,7 +21,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const authToken = getCookie("auth_token");
-  console.log(authToken);
+  // console.log(authToken);
   useEffect(() => {
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);

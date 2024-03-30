@@ -56,8 +56,7 @@ const MyAccount = () => {
         }
 
         const userData = await response.json();
-        console.log("User Details Fetched Successfully", userData);
-
+        // console.log("User Details Fetched Successfully", userData);
         // Set the form data with fetched user details
         setFormData(userData.data);
       } catch (error) {
