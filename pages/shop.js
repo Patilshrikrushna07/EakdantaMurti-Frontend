@@ -3,7 +3,7 @@ import React from "react";
 import { ProductCard } from "../components";
 
 export default function Shop({ products }) {
-  console.log("Products received:", products);
+  // console.log("Products received:", products);
 
   const productsArray = products.data;
 
