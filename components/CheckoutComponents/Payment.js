@@ -118,7 +118,7 @@ export default function MakePayment({ onPaymentComplete, cartData }) {
         body: JSON.stringify({
           user_id: userId,
           items: orderItems,
-          total_amount: totalPrice,
+          total_amount: totalPrice + 299,
           status: "Pending",
         }),
         headers: {

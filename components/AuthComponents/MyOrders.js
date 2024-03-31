@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { getCookie } from "cookies-next";
 
-
 const MyOrders = () => {
 
   const [ordersWithProductDetails, setOrdersWithProductDetails] = useState([]);
