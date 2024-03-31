@@ -25,8 +25,6 @@ export default function Layout({children}) {
         <p className='text-[2.8vh] font-semibold my-[2vh] mr-[2vh]'>Loading</p>
         <CircularProgress size={24} className='text-amber-950'/>
         </div>
-        
-
       </div>
     ):(
       <div>
