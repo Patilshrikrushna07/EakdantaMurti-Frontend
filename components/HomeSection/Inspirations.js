@@ -18,9 +18,10 @@ const Inspirations = () => {
   }, []);
 
   const images = [
-    { id: 1, source: "/inspiration1.jpg" },
-    { id: 2, source: "/inspiration2.jpg" },
-    { id: 3, source: "/inspiration3.jpg" },
+    { id: 1, source: "/slider/boxslider.webp" },
+    { id: 2, source: "/slider/boxslider2.webp" },
+    { id: 3, source: "/slider/boxslider3.webp" },
+    { id: 4, source: "/slider/boxslider4.webp" },
   ];
 
   return (
@@ -60,7 +61,7 @@ const Inspirations = () => {
             <img
               key={image.id}
               src={image.source}
-              className="object-fill md:h-[80vh] h-[50vh] mx-auto"
+              className="object-cover md:h-[80vh] h-[50vh] mx-auto"
               alt={`Inspiration ${image.id}`}
             />
           ))}

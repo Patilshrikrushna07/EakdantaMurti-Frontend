@@ -59,7 +59,7 @@ export const OrderStatus = () => {
           Thank You for Order
         </h1>
         <p className=" text-amber-950 text-[2.8vh] text-center">
-          Your Order Confirmation is sent to your registered email address
+          Your Order Updates will be shared on your registered email address
         </p>
         <p className="text-center text-[3vh] font-semibold text-green-800 my-[2vh]">
           {email}
