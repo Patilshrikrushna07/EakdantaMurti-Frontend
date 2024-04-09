@@ -55,8 +55,8 @@ export const Order = ({ summary }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("Product Data fetched", data); // Log product data
-        setProductData(data); // Set product data
+        console.log("Product Data fetched", data); 
+        setProductData(data);
       }
     } catch (error) {
       console.log("Error fetching product details:", error)
@@ -134,7 +134,7 @@ export const Order = ({ summary }) => {
       </table>
 
       {modal && selectedOrder && (
-        <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
+        <div className="fixed z-30 inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
           <div className="w-[80%] relative bg-white p-[2vh] rounded-2xl">
             <h1 className="text-[3.5vh] text-center my-[2vh]">Order Details</h1>
 
@@ -182,7 +182,7 @@ export const Order = ({ summary }) => {
                 >
                   {productData && productData[index] && (
                     <img
-                      className="w-[15vh] h-[18vh] object-cover mr-[4vh] p-[0.2vh] bg-[#111]"
+                      className="w-[15vh] h ccA-[18vh] object-cover mr-[4vh] p-[0.2vh] bg-[#111]"
                       src={productData[index].images[0]} // Assuming productData contains image URLs
                       alt={productData[index].name} // Assuming productData contains product names
                     />

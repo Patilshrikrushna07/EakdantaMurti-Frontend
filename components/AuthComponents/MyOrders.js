@@ -114,13 +114,13 @@ const MyOrders = () => {
                 Order ID: <span className="font-normal"> #{order._id}</span>
               </h2>
               <div>
-                <button
+                {/* <button
                   className="text-center px-[2vh] my-[2vh] font-semibold shadow-md hover:scale-110 hover:bg-[#B88E2F] hover:text-white transition-all mx-auto py-[1vh] text-[#B88E2F]  border-[#B88E2F] border-[0.3vh] mr-[2vh]"
                   onClick={handleDownload}
                 >
                   {" "}
                   Download Invoice
-                </button>
+                </button> */}
                 <button
                   className={`text-center px-[2vh] my-[2vh] font-semibold shadow-md hover:scale-110 transition-all mx-auto py-[1vh] border-[0.3vh] mr-[2vh] ${
                     order.status === "Delivered"
@@ -159,7 +159,7 @@ const MyOrders = () => {
               >
                 <img
                   className="w-[15vh] h-[18vh] object-cover mr-[4vh] p-[0.2vh] bg-[#111]"
-                  src={product.images[0]}
+                  src={product.images}
                   alt={product.name}
                 />
                 <div className="flex flex-row justify-between">

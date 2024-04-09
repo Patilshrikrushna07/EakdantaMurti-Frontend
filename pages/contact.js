@@ -12,10 +12,8 @@ import toast from "react-hot-toast";
 export default function contact() {
   useEffect(() => {
     AOS.init({});
-
     // Add event listeners for updates
     AOS.refresh();
-
     // Clean up on component unmount
     return () => {
       AOS.refreshHard();
@@ -81,8 +79,8 @@ export default function contact() {
 
   return (
     <div className="overflow-hidden ">
-      <div className="bg-[url('/backgroundbanner.jpg')] md:bg-cover  md:bg-center bg-cover bg-no-repeat bg-center h-[9vh] md:h-[35vh]  flex justify-center items-center ">
-        <p className=" md:text-[8vh] text-[3vh] text-center align-middle ">Contact Us</p></div>
+      <div className="bg-[url('/backgroundbanner.webp')] md:bg-cover  md:bg-center bg-cover bg-no-repeat bg-center h-[9vh] md:h-[35vh]  flex justify-center items-center ">
+        <p className=" md:text-[8vh]  shadow-xl text-white font-semibold  text-[3vh] text-center align-middle ">Contact Us</p></div>
       <div className="flex flex-col-reverse md:flex-row md:justify-evenly justify-center items-center mt-[2vh]">
         <div
           className="flex flex-col space-y-6 p-[6vh] rounded-3xl bg-[#F9F1E7] my-[5vh] shadow-lg"
@@ -154,6 +152,8 @@ export default function contact() {
               margin="normal"
               name="phoneNumber"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              // maxLength={10}
+              maxLength="10"
               value={formData.phoneNumber}
               onChange={handleChange}
               className="md:w-[48%] w-full "
