@@ -113,7 +113,7 @@ export const Order = ({ summary }) => {
                 </tr>
               </thead>
               <tbody>
-                {selectedOrder.products.map((product) => (
+                {selectedOrder?.products?.map((product) => (
                   <tr key={product.id}>
                     <td className="border px-4 py-2">{product.name}</td>
                     <td className="border px-4 py-2">${product.price}</td>

@@ -159,17 +159,17 @@ export default function OrderDetail() {
               </div>
 
               <div className="flex flex-col md:flex-row justify-between">
-                <TextField
-                  id="standard-basic"
-                  label="Email"
-                  variant="standard"
-                  margin="normal"
-                  name="email"
-                  type="email"
-                  className="md:w-[48%] w-full"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                  <TextField
+                    id="standard-basic"
+                    label="Email"
+                    variant="standard"
+                    margin="normal"
+                    name="email"
+                    type="email"
+                    className="md:w-[48%] w-full"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
 
                 <TextField
                   id="standard-basic"

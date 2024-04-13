@@ -315,7 +315,7 @@ export default function AddProduct({ products }) {
         toast.success("Product deleted successfully")
         console.log("Product deleted successfully:", selectProduct);
         setDeleteModal(false);
-        router.push("/")
+        router.push("/admin")
       } else {
         throw new Error(responseData.message || "Failed to delete product");
       }

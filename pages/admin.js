@@ -47,6 +47,7 @@ export async function getServerSideProps(context) {
 
     products = await productsResponse.json();
     summary = await ordersResponse.json();
+    console.log(summary);
 
   } catch (error) {
     console.error("Error fetching data:", error);
