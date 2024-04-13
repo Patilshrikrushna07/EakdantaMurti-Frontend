@@ -22,8 +22,8 @@ const MyAccountPage = ({loggedInUser}) => {
 
   return (
     <div>
-      <div className="w-[90%] relative my-[6vh] mx-auto flex flex-row justify-between items-center">
-        <div className="absolute my-[5vh] flex flex-row border-2 rounded-full border-amber-800">
+      <div className="w-[90%] my-[5vh] relative mx-auto flex flex-row justify-between items-center">
+        <div className="my-auto flex flex-row border-2 rounded-full border-amber-800">
           <button
             className={`text-[2vh] px-[2vh] py-[1.5vh] rounded-full transition-all ease-in-out ${
               activeBtn === "MyAccount" ? "bg-amber-800 text-white" : ""
@@ -41,14 +41,19 @@ const MyAccountPage = ({loggedInUser}) => {
             My Orders
           </button>
         </div>
-        <h1 className="text-[3.5vh] font-medium mx-auto">My Account</h1>
+        <div>
+          <h1 className="text-[3.5vh] font-medium mx-auto ">
+            {activeBtn === "MyOrders" ? "My Recent Orders" : "My Account"}
+          </h1>
+        </div>
         <button
           onClick={handleLogout}
-          className="absolute right-0 text-center px-[3vh] rounded-sm font-semibold shadow-md hover:scale-125 transition-all hover:bg-red-600 hover:text-[#f5f4f4] w-fit py-[1vh] text-red-600  border-red-600 border-[0.3vh] "
+          className="text-center px-[3vh] rounded-sm font-semibold shadow-md hover:scale-125 transition-all hover:bg-red-600 hover:text-[#f5f4f4] w-fit py-[1vh] text-red-600  border-red-600 border-[0.3vh] "
         >
           Logout
         </button>
       </div>
+
       <div className="w-[80vw] mx-auto overflow-hidden m-[10vh]">
         {activeBtn === "MyAccount" ? <MyAccount /> : <MyOrders />}
       </div>

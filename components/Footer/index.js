@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-xl p-[6vh] md:p-[10vh] border-t-2 my-[2vh] py-[5vh] border-[#ebeaea]">
+    <footer className="bg-white shadow-xl p-[6vh] md:p-[10vh] border-t-2 mt-[2vh] py-[5vh] border-[#ebeaea]">
       <div className='flex flex-col md:flex-row justify-between'>
         <div className='flex flex-col space-y-4 text-[#9F9F9F]'>
           <Link href="/">

@@ -3,7 +3,7 @@ import React from "react";
 import { ProductCard } from "../components";
 
 export default function Shop({ products }) {
-  console.log("Products received:", products);
+  // console.log("Products received:", products);
 
   const productsArray = products.data;
 
@@ -17,9 +17,9 @@ export default function Shop({ products }) {
   }
 
   return (
-    <div className="mx-[2vh]">
-      <div className="bg-[url('/backgroundbanner.jpg')] md:bg-cover  md:bg-center bg-cover bg-no-repeat bg-center h-[9vh] md:h-[35vh]  flex justify-center items-center ">
-        <p className=" md:text-[7vh] text-[3vh] text-center align-middle ">Shop</p>
+    <div className="">
+      <div className="bg-[url('/backgroundbanner.webp')] md:bg-cover  md:bg-center bg-cover bg-no-repeat bg-center h-[9vh] md:h-[35vh]  flex justify-center items-center ">
+        <p className=" md:text-[7vh] text-[3vh] shadow-xl text-white font-semibold text-center align-middle ">Shop</p>
       </div>
       <h2 className=" md:text-[6vh] mt-[5vh] font-bold font-sans text-[3vh] text-center align-middle text-[#3A3A3A]">Our Murtis</h2>
 

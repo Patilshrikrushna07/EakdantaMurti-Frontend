@@ -9,7 +9,7 @@ import { getCookie } from "cookies-next";
 export default function ProductDetails({ product }) {
   const authToken = getCookie('auth_token');
 
-  console.log("Product received in ProductDetails:", product);
+  // console.log("Product received in ProductDetails:", product);
 
   if (!product || !product.data) {
     return <div>Loading...</div>;
