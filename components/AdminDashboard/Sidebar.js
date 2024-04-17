@@ -13,7 +13,7 @@ import AddProduct from "./AddProduct";
 import { User } from "./SidebarComponent/User";
 import { useRouter } from "next/router";
 
-const Sidebar = ({ products, summary , userdetail }) => {
+const Sidebar = ({ products, orderdetail , userdetail }) => {
   
   const router = useRouter();
 
@@ -53,7 +53,7 @@ const Sidebar = ({ products, summary , userdetail }) => {
             <li className="px-4 py-2 bg-[#f4f3f319] rounded-xl  mx-[3vh] shadow-2xl hover:scale-105  hover:bg-white hover:text-gray-800">
               <div
                 onClick={() =>
-                  handleComponentChange(<Order summary={summary} />)
+                  handleComponentChange(<Order orderdetail={orderdetail} />)
                 }
                 className="cursor-pointer"
               >
