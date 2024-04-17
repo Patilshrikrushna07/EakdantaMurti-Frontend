@@ -37,7 +37,7 @@ export default function Cart() {
 
       {cartItems.length > 0 ? (
         <div className="flex flex-col md:flex-row justify-between  md:space-x-5">
-          <div className="overflow-y-scroll md:h-[50vh]">
+          <div className="overflow-y-scroll md:h-[50vh] w-[70vw]">
             {cartItems.map((product) => (
               <div
                 key={product.data._id}
@@ -86,7 +86,7 @@ export default function Cart() {
               </div>
             ))}
           </div>
-          <div className="md:w-[40vw] sticky bg-[#fcf0e8be]  shadow-md flex flex-col justify-center  space-y-4">
+          <div className="md:w-[30vw] sticky bg-[#fcf0e8be]  shadow-md flex flex-col justify-center  space-y-4">
             <h1 className="md:text-[3.2vh] text-[#652222] font-medium text-center">
               Cart Totals
             </h1>

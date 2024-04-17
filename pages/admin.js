@@ -1,18 +1,18 @@
 import React from "react";
 import Sidebar from "../components/AdminDashboard/Sidebar";
 
-export default function AdminPanel({ products, summary, userdetail }) {
+export default function AdminPanel({ products, orderdetail, userdetail }) {
   // console.log("User data : ", userdetail);
   return (
     <div className="bg-[#fffffff8]">
-      <Sidebar products={products} summary={summary} userdetail = {userdetail} />
+      <Sidebar products={products} orderdetail={orderdetail} userdetail = {userdetail} />
     </div>
   );
 }
 
 export async function getServerSideProps(context) {
   let products = [];
-  let summary = null;
+  let orderdetail = null;
   let userdetail = [];
 
   const { req } = context;
@@ -64,7 +64,7 @@ export async function getServerSideProps(context) {
     }
 
     products = await productsResponse.json();
-    summary = await ordersResponse.json();
+    orderdetail = await ordersResponse.json();
     userdetail = await userdetailResponse.json();
 
   } catch (error) {
@@ -74,7 +74,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       products: products || [],
-      summary: summary || null,
+      orderdetail: orderdetail || null,
       userdetail: userdetail || [],
     },
   };

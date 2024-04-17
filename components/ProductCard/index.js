@@ -28,11 +28,11 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link href="/productdetails/[id]" as={`/productdetails/${_id}`}>
-      <div className="relative cursor-pointer bg-gray-100 shadow-lg w-[19vh] md:w-[35vh]  ">
-        <div>
+      <div className="relative cursor-pointer bg-gray-100 shadow-lg w-[19vh] md:w-[35vh] md:h-[64vh]">
+        <div >
           <img
             src={images[0]}
-            className="md:h-[38vh] md:w-[35vh] w-[20vh] h-[20vh] object-cover"
+            className="md:h-[44vh] md:w-[35vh] w-[20vh] h-[20vh] object-cover"
           />
         </div>
 
